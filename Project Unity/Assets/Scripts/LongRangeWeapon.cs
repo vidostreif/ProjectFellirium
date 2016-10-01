@@ -53,7 +53,7 @@ public class LongRangeWeapon : MonoBehaviour {
                 //float targetSpeed = Mathf.Sqrt((Mathf.Abs(targetRigidbody2D.velocity.x)) /  (newBulletRigidbody.gravityScale))/ distance * 3;
                 //targetSpeed = Mathf.Sqrt((Mathf.Abs(targetRigidbody2D.velocity.x) / distance/ (newBulletRigidbody.gravityScale) ));
                 //targetSpeed = (Mathf.Abs(targetRigidbody2D.velocity.x) / distance * 1.5f / (newBulletRigidbody.gravityScale));
-                targetSpeed = (Mathf.Abs(targetRigidbody2D.velocity.x - targetRigidbody2D.velocity.y) / distance * 1.5f / Mathf.Sqrt(newBulletRigidbody.gravityScale));
+                targetSpeed = ((Mathf.Abs(targetRigidbody2D.velocity.x) - targetRigidbody2D.velocity.y) / distance * 1.5f / Mathf.Sqrt(newBulletRigidbody.gravityScale));
 
                 //targetSpeed = Mathf.Sqrt(Mathf.Abs(targetRigidbody2D.velocity.x) * (distance)/1700 / (newBulletRigidbody.gravityScale));
 

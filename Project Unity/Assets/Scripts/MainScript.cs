@@ -29,7 +29,7 @@ public class MainScript : MonoBehaviour {
     {
         float closestMobDistance = maxAttackDistance; //дистанция до ближайшего моба
         GameObject nearestmob = null; //инициализация переменной ближайшего моба
-        GameObject[] sortingMobs = GameObject.FindGameObjectsWithTag("Mobs"); //находим всех мобов с тегом Mob и создаём массив для сортировки
+        GameObject[] sortingMobs = GameObject.FindGameObjectsWithTag("Mob"); //находим всех мобов с тегом Mob и создаём массив для сортировки
 
         foreach (GameObject mob in sortingMobs) //для каждого моба в массиве
         {
