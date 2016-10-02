@@ -47,7 +47,7 @@ public class CameraController : MonoBehaviour {
             if (startMousePosition == new Vector3(0, 0, 0))
             {
                 //записываем положение мышки
-                startMousePosition = Input.mousePosition;
+                startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }            
         }
 
@@ -55,11 +55,11 @@ public class CameraController : MonoBehaviour {
         if (Input.GetMouseButton(1))
         {
             //расчитываем вектор смещения
-            Vector3 translation = startMousePosition - Input.mousePosition;
-            //передаем его камере уменьшив на 10, что бы медленее прокручивал
-            myCam.transform.Translate(translation / 40 * myCam.orthographicSize);
+            Vector3 translation = startMousePosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //передаем его камере новую позицию
+            myCam.transform.Translate(translation);
             //переопределяем стартовую позицию мышки
-            startMousePosition = Input.mousePosition;
+            startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
         else
         {
