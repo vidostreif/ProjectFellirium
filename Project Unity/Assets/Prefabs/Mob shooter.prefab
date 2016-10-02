@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 114000012297958392}
   m_Layer: 8
   m_Name: Mob shooter
-  m_TagString: Mobs
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
