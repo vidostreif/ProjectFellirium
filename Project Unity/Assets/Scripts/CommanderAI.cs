@@ -4,12 +4,14 @@ using System;
 
 public class CommanderAI : MonoBehaviour {
 
-    public GameObject tower;
+    public GameObject tower;//башня командира
 
-    public float delayTimeCreateMob = 5;
+    public float delayTimeCreateMob = 5; //пауза между соданиями моба
     public float delayTimeCreateMob2 = 6;
-    public GameObject mob;
+    public GameObject mob;//префаб моба
     public GameObject mob2;
+
+    public bool managePlayer = false;//признок перехвата управления игроком
 
     public CommanderAI enemy;//командир враг
     public CommanderAI friend;//командир друг

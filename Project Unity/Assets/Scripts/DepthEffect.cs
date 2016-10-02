@@ -19,7 +19,7 @@ public class DepthEffect : MonoBehaviour {
         //вычисляем расстояние между камерой и фоном
         speed = Mathf.Abs(thisTransform.position.z - myCam.transform.position.z);
         //уменьшаем значение
-        speed = speed * 0.05f;
+        speed = speed * 0.03f;
     }
     
     void Update()
