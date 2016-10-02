@@ -28,14 +28,15 @@ public class Magic : MonoBehaviour {
             {
                 case EnumAirMagic.BlowingOffBulletExplosion:
                     //создаем взрыв в месте клика
-                    Explosion(Camera.main.ScreenToWorldPoint(Input.mousePosition), thisExplosionRadius, thisExplosionForce);
+                    EffectsBulletsOnRadius(EnumAirMagic.BlowingOffBulletExplosion, thisExplosionForce, Camera.main.ScreenToWorldPoint(Input.mousePosition), thisExplosionRadius);
                     break;
                 case EnumAirMagic.BlowingOffBullets:
-
+                    //перенаправляем снаряды в сторону врага
+                    EffectsBulletsOnRadius(EnumAirMagic.BlowingOffBullets, thisExplosionForce, Camera.main.ScreenToWorldPoint(Input.mousePosition), thisExplosionRadius);
                     break;
             }
 
-            currentMagic = 0;//обозначаем 
+            //currentMagic = 0;//обозначаем 
             
         }
     }
@@ -50,40 +51,54 @@ public class Magic : MonoBehaviour {
         
     }
 
-    public void Explosion(Vector2 explosionPosition, float explosionRadius, float explosionForce)
+    public List<GameObject> FindObjectsInRadius(Vector2 position, float Radius, string tag)
     {
         List<GameObject> objectsToInteract = new List<GameObject>();//список для объектов для взаимодействия
-        GameObject[] findeObjects = GameObject.FindGameObjectsWithTag("Bullet"); //находим всех объекты с тегом  и создаём массив из них
+        GameObject[] findeObjects = GameObject.FindGameObjectsWithTag(tag); //находим всех объекты с тегом  и создаём массив из них
 
-        foreach (GameObject currentObject in findeObjects) //для каждого моба в массиве
+        foreach (GameObject currentObject in findeObjects) //для каждого объекта в массиве
         {
-            float distance = Vector3.Distance(currentObject.transform.position, explosionPosition);//дистанция до объекта
-            if (distance <= explosionRadius)//если объект находиться в радиусе действия
+            float distance = Vector2.Distance(currentObject.transform.position, position);//дистанция до объекта
+            if (distance <= Radius)//если объект находиться в радиусе действия
             {
-                Rigidbody2D currentObjectRigidbody2D = currentObject.GetComponent<Rigidbody2D>();
-                BulletScript currentObjectBulletScript = currentObject.GetComponent<BulletScript>();
-                if (currentObjectRigidbody2D && currentObjectBulletScript)//если есть физика и скрип снаряда
+                //добавляем в список
+                objectsToInteract.Add(currentObject);
+            }
+        }
+
+        return objectsToInteract;
+    }
+
+    //воздействует на снаряды определенной магией, с определенной силой, в определенной позиции, в определенном радиусе
+    public void EffectsBulletsOnRadius(EnumAirMagic magic, float force, Vector3 position, float radius)
+    {
+        //находим все снаряды в радиусе
+        List<GameObject> objectsToInteract = FindObjectsInRadius(position, radius, "Bullet");
+        foreach (GameObject currentObject in objectsToInteract) //для каждого объекта в массиве
+        {
+            Rigidbody2D currentObjectRigidbody2D = currentObject.GetComponent<Rigidbody2D>();
+            BulletScript currentObjectBulletScript = currentObject.GetComponent<BulletScript>();
+            if (currentObjectRigidbody2D && currentObjectBulletScript)//если есть физика и скрип снаряда
+            {
+                if (currentObjectBulletScript.enemy == commander)//если снаряд против нашей команды
                 {
-                    if (currentObjectBulletScript.enemy == commander)//если стрельба против нашей команды
+                    //меняем врага
+                    currentObjectBulletScript.enemy = commander.enemy;
+                    //воздействуем на объект
+                    if (magic == EnumAirMagic.BlowingOffBulletExplosion)//если взрыв
                     {
-                        //меняем командира
-                        currentObjectBulletScript.enemy = commander.enemy;
-                        //воздействуем на объект
-                        AddExplosionForce(currentObjectRigidbody2D, explosionForce, explosionPosition, explosionRadius);
+                        var dir = (currentObjectRigidbody2D.transform.position - position);
+                        float wearoff = 1 - (dir.magnitude / radius);
+                        currentObjectRigidbody2D.AddForce(dir.normalized * force * wearoff);
+                    }
+                    else if (magic == EnumAirMagic.BlowingOffBullets)//если возврат во врага
+                    {
+                        currentObjectRigidbody2D.velocity = (-currentObjectRigidbody2D.velocity);
                     }
                     
                 }
 
             }
         }
-
-    }
-
-
-    public void AddExplosionForce(Rigidbody2D body, float explosionForce, Vector3 explosionPosition, float explosionRadius)
-    {
-        var dir = (body.transform.position - explosionPosition);
-        float wearoff = 1 - (dir.magnitude / explosionRadius);
-        body.AddForce(dir.normalized * explosionForce * wearoff);
     }
 }
