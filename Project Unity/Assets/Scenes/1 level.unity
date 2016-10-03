@@ -592,6 +592,29 @@ Transform:
   m_PrefabParentObject: {fileID: 4000011421049170, guid: 54f2707f6bc48fa40ade297eb445d318,
     type: 2}
   m_PrefabInternal: {fileID: 313053401}
+--- !u!1 &415891486 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013138391972, guid: 0f84c3504e1723248acce514622d99cf,
+    type: 2}
+  m_PrefabInternal: {fileID: 477746145}
+--- !u!114 &415891487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 415891486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ba6a7ef84a92274488c9f0f83d10b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisExplosionForce: 5000
+  thisExplosionRadius: 15
+  bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
+    type: 2}
+  numberOfArrows: 20
+  damageOfArrows: 30
+  magicList: 020000000100000003000000
 --- !u!1 &428760193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,7 +1224,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisExplosionForce: 5000
   thisExplosionRadius: 20
-  magicList: 0200000001000000
+  bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
+    type: 2}
+  numberOfArrows: 20
+  damageOfArrows: 30
+  magicList: 020000000100000003000000
 --- !u!1 &884220708
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,7 +2462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9469c03a525f2e489c6d6fcd3823f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commanderMagic: {fileID: 838489762}
+  commanderMagic: {fileID: 415891487}
 --- !u!1 &1923111166 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1000011431651290, guid: 8d1f0754a5380bc459e5e68b4ded2036,

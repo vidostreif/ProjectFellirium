@@ -5,8 +5,12 @@ using System.Collections.Generic;
 public class Magic : MonoBehaviour {
 
     private CommanderAI commander;
-    public float thisExplosionForce;
-    public float thisExplosionRadius;
+    public float thisExplosionForce = 5000;
+    public float thisExplosionRadius = 15;
+
+    public GameObject bulletPrefab; //префаб стрелы
+    public int numberOfArrows = 20; //количество стрел
+    public float damageOfArrows = 30; // урон стрел
 
     public EnumAirMagic[] magicList; //список магии
     private EnumAirMagic currentMagic = 0;//выбранная магия
@@ -33,6 +37,10 @@ public class Magic : MonoBehaviour {
                 case EnumAirMagic.BlowingOffBullets:
                     //перенаправляем снаряды в сторону врага
                     EffectsBulletsOnRadius(EnumAirMagic.BlowingOffBullets, thisExplosionForce, Camera.main.ScreenToWorldPoint(Input.mousePosition), thisExplosionRadius);
+                    break;
+                case EnumAirMagic.StormOfArrows:
+                    //перенаправляем снаряды в сторону врага
+                    CreateStormOfArrows(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     break;
             }
 
@@ -100,5 +108,34 @@ public class Magic : MonoBehaviour {
 
             }
         }
+    }
+
+    public void CreateStormOfArrows(Vector3 position)
+    {
+        //создаем стрелы
+        for (int i = 0; i <= numberOfArrows; i++)
+        {
+            //создаем снаряд в рандомном месте рядом с указанной позицией
+            GameObject newBullet = (GameObject)Instantiate(bulletPrefab, new Vector2(Random.Range(position.x - 2, position.x + 2), Random.Range(position.y - 2, position.y + 2)), Quaternion.identity);
+            BulletScript newBulletBulletScript = newBullet.GetComponent<BulletScript>();
+            Rigidbody2D newBulletRigidbody = newBullet.GetComponent<Rigidbody2D>();
+
+            //расчитывем направление выстрела
+            Vector3 vShotDirection = (Vector3)commander.enemy.transform.position - position;
+            vShotDirection.Normalize();
+
+            //указываем кто враг
+            newBulletBulletScript.enemy = commander.enemy;
+            //указываем урон
+            newBulletBulletScript.Damage = damageOfArrows;
+
+            //стреляем
+            Vector2 attackForce = vShotDirection * newBulletRigidbody.mass * Mathf.Sqrt(newBulletRigidbody.gravityScale) * Random.Range(308f, 311f);
+            //указываем направление снаряда
+            newBulletBulletScript.ToTurn(attackForce);
+            
+            newBulletRigidbody.AddForceAtPosition(attackForce, new Vector2(0, 0));
+        }
+
     }
 }

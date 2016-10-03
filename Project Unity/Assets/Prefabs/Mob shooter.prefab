@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
     type: 2}
-  attackPause: 1
+  attackPause: 2
   damage: 15
   attackForce: {x: 0, y: 0, z: 0}
 --- !u!114 &114000010983634948

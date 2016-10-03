@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d03ebe8b0101243a6eb950130e5511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPause: 0.5
+  attackPause: 1
   damage: 20
 --- !u!114 &114000010983634948
 MonoBehaviour:

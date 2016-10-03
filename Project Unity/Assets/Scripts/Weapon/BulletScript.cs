@@ -85,15 +85,19 @@ public class BulletScript : MonoBehaviour {
     //Декативируем снаряд
     private void DisableMissile(GameObject target)
     {
-        //отсанавливаем обьект
-        thisRigidbody2D.velocity = new Vector3(0, 0, 0);
-        thisRigidbody2D.isKinematic = true;
-        //сообщаем, что снаряд более не активен
-        activeMissile = false;
-        //делаем снаряд дочерним для объекта в который попали
-        transform.parent = target.transform;
-        //уничтожаем через секунд
-        Destroy(gameObject, 0.5f);
+        if (thisRigidbody2D && activeMissile)//если есть риджи боди и снаряд активен
+        {
+            //отсанавливаем обьект
+            thisRigidbody2D.velocity = new Vector3(0, 0, 0);
+            thisRigidbody2D.isKinematic = true;
+            //сообщаем, что снаряд более не активен
+            activeMissile = false;
+            //делаем снаряд дочерним для объекта в который попали
+            transform.parent = target.transform;
+            //уничтожаем через секунд
+            Destroy(gameObject, 0.5f);
+        }
+        
     }
 
 }
