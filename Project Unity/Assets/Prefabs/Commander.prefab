@@ -62,6 +62,7 @@ MonoBehaviour:
   friend: {fileID: 0}
   cards:
   - {fileID: 114000011700220752, guid: 9a9acc372db880e40849486fee696e31, type: 2}
+  - {fileID: 114000011700220752, guid: b268360937fc49442ae28e9156138857, type: 2}
 --- !u!114 &114000012674574852
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -44,6 +44,7 @@ public class ImprovingCard : MonoBehaviour {
     //поиск совпадающих компонентов для обновления
     private void SearchMatchingComponentsToUpdate(GameObject transferredObject) {
 
+        DeleteOnExceptionsList();
 
         Component[] objectComponents = transferredObject.GetComponents<Component>();
         foreach (var thisComponent in thisComponents) //для каждого объекта в массиве
