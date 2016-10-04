@@ -9,7 +9,7 @@ public class BulletScript : MonoBehaviour {
     private float timedeath; //что бы патрон не летел вечно, мы ограничим время его жизни
     private Rigidbody2D thisRigidbody2D;
     private SpriteRenderer thisSpriteRenderer;
-    private Vector3 lastPosition;
+    //private Vector3 lastPosition;
     private bool activeMissile = true;
 
     // Use this for initialization
@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour {
         timedeath = Time.time + timeLive; //время смерти патрона	
         thisRigidbody2D = GetComponent<Rigidbody2D>();
         thisSpriteRenderer = GetComponent<SpriteRenderer>();
-        lastPosition = transform.position;
+        //lastPosition = transform.position;
     }
 
     void FixedUpdate()
@@ -29,7 +29,7 @@ public class BulletScript : MonoBehaviour {
             //{
 
                 ToTurn(thisRigidbody2D.velocity);//повернуть
-                lastPosition = transform.position;//записываем текущую позицию
+                //lastPosition = transform.position;//записываем текущую позицию
             //}
 
 

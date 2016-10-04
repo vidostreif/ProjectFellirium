@@ -41,7 +41,7 @@ public class LongRangeWeapon : MonoBehaviour {
             //Скорость цели 
             //если увеличиваем, то снижаем угол
             float targetSpeed = 0;
-            if (distance > 5)
+            if (distance > 7 * thisTransform.localScale.x)//если дистанция меньше чем
             {
                 //targetSpeed = Mathf.Sqrt((Mathf.Abs(targetRigidbody2D.velocity.x) / distance / 1.9f / (newBulletRigidbody.gravityScale)));
                 targetSpeed = ((Mathf.Abs(targetRigidbody2D.velocity.x - targetRigidbody2D.velocity.y/2)) / distance * 1.9f / Mathf.Sqrt(newBulletRigidbody.gravityScale));

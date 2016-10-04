@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour {
 
     public float sensitivity;   
 
-    private float Boundary = 5; //размер рамки при нахождении в которой будет передвигаться камера
+    //private float Boundary = 5; //размер рамки при нахождении в которой будет передвигаться камера
     private Camera myCam;
     private Vector3 startMousePosition = new Vector3(0,0,0);
 

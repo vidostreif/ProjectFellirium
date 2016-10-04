@@ -9,15 +9,15 @@ public class LoopedMotionBackground : MonoBehaviour {
 
     private Vector3 positionFirstObject; //первый объект
     private Vector3 positionSecondObject; //второй объект
-    private Vector3 startPoitionParent;//стартовая позиция родителя
-    private Transform transformParent;//позиция родителя
+    //private Vector3 startPoitionParent;//стартовая позиция родителя
+    //private Transform transformParent;//позиция родителя
     private List<Transform> transformChilds;//список дочерних трансформов
 
     void Start()
     {
-        transformParent = transform;
-        //записываем стартовую позицию родителя
-        startPoitionParent = transformParent.position;
+        //transformParent = transform;
+        ////записываем стартовую позицию родителя
+        //startPoitionParent = transformParent.position;
 
         //инициализируем список
         transformChilds = new Transform[transform.childCount].ToList();

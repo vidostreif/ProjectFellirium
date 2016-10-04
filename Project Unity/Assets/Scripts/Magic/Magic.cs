@@ -59,7 +59,7 @@ public class Magic : MonoBehaviour {
         
     }
 
-    public List<GameObject> FindObjectsInRadius(Vector2 position, float Radius, string tag)
+    public List<GameObject> FindObjectsInRadius(Vector2 position, float Radius, string tag)//поиск объектов по тегу в радиусе
     {
         List<GameObject> objectsToInteract = new List<GameObject>();//список для объектов для взаимодействия
         GameObject[] findeObjects = GameObject.FindGameObjectsWithTag(tag); //находим всех объекты с тегом  и создаём массив из них
@@ -110,20 +110,19 @@ public class Magic : MonoBehaviour {
         }
     }
 
-    public void CreateStormOfArrows(Vector3 position)
+    public void CreateStormOfArrows(Vector3 position)//град стрел
     {
         //создаем стрелы
         for (int i = 0; i <= numberOfArrows; i++)
         {
-            //создаем снаряд в рандомном месте рядом с указанной позицией
-            GameObject newBullet = (GameObject)Instantiate(bulletPrefab, new Vector2(Random.Range(position.x - 2, position.x + 2), Random.Range(position.y - 2, position.y + 2)), Quaternion.identity);
-            BulletScript newBulletBulletScript = newBullet.GetComponent<BulletScript>();
-            Rigidbody2D newBulletRigidbody = newBullet.GetComponent<Rigidbody2D>();
-
             //расчитывем направление выстрела
             Vector3 vShotDirection = (Vector3)commander.enemy.transform.position - position;
             vShotDirection.Normalize();
 
+            //создаем снаряд в рандомном месте рядом с указанной позицией
+            GameObject newBullet = (GameObject)Instantiate(bulletPrefab, new Vector2(Random.Range(position.x - 2, position.x + 2), Random.Range(position.y - 2, position.y + 2)), Quaternion.identity);
+            BulletScript newBulletBulletScript = newBullet.GetComponent<BulletScript>();
+            Rigidbody2D newBulletRigidbody = newBullet.GetComponent<Rigidbody2D>();
             //указываем кто враг
             newBulletBulletScript.enemy = commander.enemy;
             //указываем урон
