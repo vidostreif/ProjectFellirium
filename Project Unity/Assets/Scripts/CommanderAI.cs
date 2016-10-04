@@ -16,6 +16,7 @@ public class CommanderAI : MonoBehaviour {
     public CommanderAI enemy;//командир враг
     public CommanderAI friend;//командир друг
 
+    public ImprovingCard[] cards; //массив карт
 
     private float timeLastCreateMob;
     private float timeLastCreateMob2;
@@ -34,7 +35,17 @@ public class CommanderAI : MonoBehaviour {
         if (Time.time > timeLastCreateMob + delayTimeCreateMob)
         {
             //создаем моба
-            MainScript.CreateMob(this, mob, tower.transform);
+            GameObject newMob = MainScript.CreateMob(this, mob, tower.transform);
+
+            //обновляем параметры моба
+            foreach (var card in cards) //для каждого объекта в массиве карт
+            {
+                ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
+                if (improvingCard)
+                {
+                    improvingCard.ToImprove(newMob);
+                }
+            }
 
             //указываем время создания последнего моба
             timeLastCreateMob = Time.time;
@@ -44,7 +55,18 @@ public class CommanderAI : MonoBehaviour {
         if (Time.time > timeLastCreateMob2 + delayTimeCreateMob2)
         {
             //создаем моба
-            MainScript.CreateMob(this, mob2, tower.transform);
+            GameObject newMob = MainScript.CreateMob(this, mob2, tower.transform);
+
+            //обновляем параметры моба
+            foreach (var card in cards) //для каждого объекта в массиве карт
+            {
+                ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
+                if (improvingCard)
+                {
+                    improvingCard.ToImprove(newMob);
+                }
+                
+            }
 
             //указываем время создания последнего моба
             timeLastCreateMob2 = Time.time;

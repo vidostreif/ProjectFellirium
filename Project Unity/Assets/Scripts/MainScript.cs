@@ -13,15 +13,17 @@ public class MainScript : MonoBehaviour {
 	}
 
     //процедура создания моба в указанных координатах с указанным командиром
-    public static void CreateMob(CommanderAI commander, GameObject mob, Transform transformStartPosition)
+    public static GameObject CreateMob(CommanderAI commander, GameObject mob, Transform transformStartPosition)
     {
         //создаем моба
         GameObject newMob = Instantiate(mob, transformStartPosition.position, transformStartPosition.rotation) as GameObject;
+        //newMob.name = mob.name;
 
         //указываем команду
         MobAI mobAI = newMob.GetComponent<MobAI>();
         mobAI.commander = commander;
 
+        return newMob;
     }
 
     //Выбор цели
