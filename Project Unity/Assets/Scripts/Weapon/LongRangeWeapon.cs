@@ -2,14 +2,10 @@
 using System.Collections;
 
 public class LongRangeWeapon : MonoBehaviour {
-
-    public GameObject bulletPrefab;
-    //public float bulletSpeed = 50;
-    public float attackPause = 0.5f;
-    public float damage;
-    public Vector3 attackForce;
-
-    //public CommanderAI Commander { get; private set; }
+    [Header("Редактирование атрибутов:")]
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float attackPause;
+    [SerializeField] private float damage;
 
     private Transform thisTransform;
     private float timeLastAttack = 0;
@@ -67,7 +63,7 @@ public class LongRangeWeapon : MonoBehaviour {
             newBulletBulletScript.ToTurn(vShotDirection);
             
             //Стреляем
-            attackForce = vShotDirection * Mathf.Sqrt(distance) * newBulletRigidbody.mass * Mathf.Sqrt(newBulletRigidbody.gravityScale) * Random.Range(109f, 112f);
+            Vector2 attackForce = vShotDirection * Mathf.Sqrt(distance) * newBulletRigidbody.mass * Mathf.Sqrt(newBulletRigidbody.gravityScale) * Random.Range(109f, 112f);
             newBulletRigidbody.AddForceAtPosition(attackForce, new Vector2(0, 0));
             
 

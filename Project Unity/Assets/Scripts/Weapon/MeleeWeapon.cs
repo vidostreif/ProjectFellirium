@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class MeleeWeapon : MonoBehaviour {
-    public float attackPause = 0.5f;
-    public float damage;
+    [Header("Редактирование атрибутов:")]
+    [SerializeField] private float attackPause;
+    [SerializeField] private float damage;
 
     private Transform thisTransform;
     private float timeLastAttack = 0;

@@ -28,7 +28,7 @@ public class MobAI : MonoBehaviour {
             //если есть оружие ближнего и дальнего боя то ищем врага на всем расстоянии поле зрения
             if (thisMeleeWeapon && thisLongRangeWeapon)
             {
-                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.attackDistance);
+                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance());
             }
             else if (thisMeleeWeapon)//если только ближнего боя, то ищем врага в блези
             {
@@ -36,7 +36,7 @@ public class MobAI : MonoBehaviour {
             }
             else if (thisLongRangeWeapon)//если только дальнего боя, то ищем врага в далеке
             {
-                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.attackDistance, 1);
+                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance(), 1);
             }
 
             //если есть цель, тогда атакуем

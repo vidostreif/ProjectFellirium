@@ -22,9 +22,8 @@ GameObject:
   - 212: {fileID: 212000013127487326}
   - 114: {fileID: 114000011700220752}
   - 114: {fileID: 114000014099832538}
-  - 114: {fileID: 114000013039703020}
   m_Layer: 0
-  m_Name: Card 1
+  m_Name: Card_HP_100
   m_TagString: Untagged
   m_Icon: {fileID: -3993051910640687065, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -54,24 +53,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fee027ebd33de49859c3ece87dfa42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  authorizedObjects:
-  - {fileID: 1000012914275440, guid: d95cbd45e507c0f4186c6b63b1ebf94f, type: 2}
-  - {fileID: 1000012914275440, guid: 9698dc8d722050640ac56fbeffebbab6, type: 2}
---- !u!114 &114000013039703020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013858576044}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4de2466ecbeb4747b27f1882ee77d5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
-  attackPause: 0
-  damage: 100
-  attackForce: {x: 0, y: 0, z: 0}
+  authorizedObjects: []
+  exceptionsComponents:
+  - {fileID: 4000011531142010}
+  - {fileID: 212000013127487326}
+  - {fileID: 114000011700220752}
 --- !u!114 &114000014099832538
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,13 +69,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199decefc827ae445baabbf35894443a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1000
+  hp: 100
   mp: 0
   movementSpeed: 0
   physicalResistance: 0
   magicResistance: 0
-  attackDistance: 10
-  isLive: 1
+  attackDistance: 5
 --- !u!212 &212000013127487326
 SpriteRenderer:
   m_ObjectHideFlags: 1

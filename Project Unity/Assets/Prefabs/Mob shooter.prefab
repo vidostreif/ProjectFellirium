@@ -125,7 +125,6 @@ MonoBehaviour:
     type: 2}
   attackPause: 2
   damage: 15
-  attackForce: {x: 0, y: 0, z: 0}
 --- !u!114 &114000010983634948
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,8 +141,7 @@ MonoBehaviour:
   movementSpeed: 250
   physicalResistance: 10
   magicResistance: 10
-  attackDistance: 30
-  isLive: 1
+  attackDistance: 15
 --- !u!114 &114000012297958392
 MonoBehaviour:
   m_ObjectHideFlags: 1

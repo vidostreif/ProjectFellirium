@@ -40,11 +40,11 @@ public class CommanderAI : MonoBehaviour {
             //обновляем параметры моба
             foreach (var card in cards) //для каждого объекта в массиве карт
             {
-                ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
-                if (improvingCard)
-                {
-                    improvingCard.ToImprove(newMob);
-                }
+                //ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
+                //if (card)
+                //{
+                    card.ToImprove(newMob);
+                //}
             }
 
             //указываем время создания последнего моба
