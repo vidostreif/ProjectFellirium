@@ -6,8 +6,17 @@ public class Card : MonoBehaviour {
     [SerializeField] private CommanderAI commander;
     public EnumCard type;
 
+    private Transform thisTransform;
+    private Vector3 newPosition;
+    private Vector3 newScale;
+
     // Use this for initialization
     void Start () {
+
+        thisTransform = GetComponent<Transform>();
+        newPosition = thisTransform.position;
+        newScale = thisTransform.localScale;
+
 
         ////находим коммандира который указан GameController
         //GameObject[] gameControllers = GameObject.FindGameObjectsWithTag("GameController");
@@ -40,45 +49,26 @@ public class Card : MonoBehaviour {
         {
             type = EnumCard.ImprovingCard; //карта улучшения
         }
-        //else if (true)
-        //{
 
-        //}
-        //else if (true)
-        //{
-
-        //}
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
+    void Update()
+    {
+        //определяем новое место и размер отображения карты
+        thisTransform.position = Vector3.Lerp(thisTransform.position ,newPosition, Time.deltaTime * 1f);
+        thisTransform.localScale = Vector3.Lerp(thisTransform.localScale, newScale, Time.deltaTime * 1f);
+    }
 
     public void MouseDown()
     {
-        PlayThisCard();
+        commander.PlayCard(this);
     }
 
-    private void PlayThisCard()
+    //определяем новые место и размер карты
+    public void MovingToANewPlace(Vector3 position, float Scale = 1)
     {
-        
-        switch (type)
-        {
-            case EnumCard.ImprovingCard: //если карта улучшения
-                commander.AddCard(this);
-                break;
-            case EnumCard.AddWarCard:
-               
-                break;
-            case EnumCard.AddEquipmentCard:
-
-                break;
-            case EnumCard.MagicCard:
-
-                break;
-        }
+        newPosition = position;
+        newScale = new Vector3(thisTransform.localScale.x * Scale, thisTransform.localScale.y * Scale, thisTransform.localScale.z * Scale);
     }
 }

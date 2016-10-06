@@ -27,7 +27,7 @@ GameObject:
   - 114: {fileID: 114000013039703020}
   - 114: {fileID: 114000013742926666}
   m_Layer: 0
-  m_Name: Card_Dam_20
+  m_Name: Card_Dam_21
   m_TagString: Card
   m_Icon: {fileID: -3993051910640687065, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dacef9c4d94e344988758da4d7b67d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commander: {fileID: 0}
+  type: 0
 --- !u!212 &212000014257278292
 SpriteRenderer:
   m_ObjectHideFlags: 1

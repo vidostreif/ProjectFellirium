@@ -17,15 +17,19 @@ public class CommanderAI : MonoBehaviour {
     public CommanderAI enemy;//командир враг
     public CommanderAI friend;//командир друг
 
-    public List<Card> cards; //массив карт
+    public List<Card> CardsInDeck; //массив карты в колоде
+    public List<Card> CardsInHand; //массив карты в руке
+    public List<Card> ActionsCards; //активные карты
+    
 
     private float timeLastCreateMob;
     private float timeLastCreateMob2;
+    private Transform thisTransform;
 
     // Use this for initialization
     void Start()
     {
-
+        thisTransform = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -39,7 +43,7 @@ public class CommanderAI : MonoBehaviour {
             GameObject newMob = MainScript.CreateMob(this, mob, tower.transform);
 
             //обновляем параметры моба
-            foreach (var card in cards) //для каждого объекта в массиве карт
+            foreach (var card in ActionsCards) //для каждого объекта в массиве карт
             {
                 if (card)
                 {
@@ -65,7 +69,7 @@ public class CommanderAI : MonoBehaviour {
             GameObject newMob = MainScript.CreateMob(this, mob2, tower.transform);
 
             //обновляем параметры моба
-            foreach (var card in cards) //для каждого объекта в массиве карт
+            foreach (var card in ActionsCards) //для каждого объекта в массиве карт
             {
                 if (card)
                 {
@@ -90,14 +94,37 @@ public class CommanderAI : MonoBehaviour {
     {
         return enemy.tower.transform;
     }
-
-
+    
 
 
     //работа с картами
-    //добавляем себе разыгранную карту
-    public void AddCard(Card card)
+    //разыграть карту
+    public void PlayCard(Card card)
     {
-        cards.Add(card);
+        if (card.type == EnumCard.ImprovingCard)
+        {
+            //добавляем карту в список активных
+            AddCardInActionsCards(card);
+        }
+
+        //убираем карту из руки
+        DeleteCardFromHand(card);
     }
+
+    //добавляем карту в список активных карт
+    public void AddCardInActionsCards(Card card)
+    {
+        ActionsCards.Add(card);
+    }
+
+    //убираем карту из руки
+    public void DeleteCardFromHand(Card card)
+    {
+        //убираем карту из руки
+        CardsInHand.Remove(card);
+
+        //определяем новое место и размер отображения карты
+        card.MovingToANewPlace(thisTransform.position, 0.5f);
+    }
+
 }
