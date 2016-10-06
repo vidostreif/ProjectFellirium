@@ -40,7 +40,7 @@ public class CameraController : MonoBehaviour {
     {
         //SetUniform();
 
-        //Если нажали левую кнопку мыши
+        //Если нажали правую кнопку мыши
         if (Input.GetMouseButtonDown(1))
         {
             //если стартовая позиция мыши нулевая

@@ -12,7 +12,7 @@ public class TowerAI : MonoBehaviour {
     void Start () {
 
         thisLongRangeWeapon = GetComponent<LongRangeWeapon>();
-        GameObject[] Commanders = GameObject.FindGameObjectsWithTag("Commanders"); //находим всех командиров
+        GameObject[] Commanders = GameObject.FindGameObjectsWithTag("Commander"); //находим всех командиров
         //и ищем своего командира
         foreach (GameObject commander in Commanders) 
         {

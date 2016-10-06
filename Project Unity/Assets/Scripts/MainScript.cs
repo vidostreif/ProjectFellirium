@@ -1,16 +1,44 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MainScript : MonoBehaviour {
+    public CommanderAI playerCommander { get; private set; }
 
 	// Use this for initialization
 	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+        //находим коммандира которым должен управлять игрок
+        GameObject[] commaders = GameObject.FindGameObjectsWithTag("Commander");
+        foreach (GameObject commader in commaders) //для каждого моба в массиве
+        {
+            CommanderAI commaderAI = commader.GetComponent<CommanderAI>();
+
+            if (commaderAI)
+            {
+                if (commaderAI.managePlayer)//если стоит галка "управляется игроком"
+                {
+                    playerCommander = commaderAI;
+                }
+            }
+        }
+
+        //если не определили командира сообщаем
+        if (playerCommander == null)
+        {
+            Debug.Log("не удалось определить командира которым должен управлять игрок! Поставьте галку в командире.");
+        }
+    }
+
+// Update is called once per frame
+    void Update () {
+
+
+    }
+
+    internal static void magicChoice(int magic)
+    {
+        Debug.Log("Магия пока не работает");
+    }
 
     //процедура создания моба в указанных координатах с указанным командиром
     public static GameObject CreateMob(CommanderAI commander, GameObject mob, Transform transformStartPosition)

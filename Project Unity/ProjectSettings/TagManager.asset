@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Commanders
+  - Commander
   - Mob
   - Bullet
+  - Card
+  - GameController
   layers:
   - Default
   - TransparentFX

@@ -23,7 +23,7 @@ GameObject:
   - 114: {fileID: 114000012674574852}
   m_Layer: 0
   m_Name: Commander
-  m_TagString: Commanders
+  m_TagString: Commander
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

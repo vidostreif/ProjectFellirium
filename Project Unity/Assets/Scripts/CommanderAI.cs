@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class CommanderAI : MonoBehaviour {
 
@@ -16,7 +17,7 @@ public class CommanderAI : MonoBehaviour {
     public CommanderAI enemy;//командир враг
     public CommanderAI friend;//командир друг
 
-    public ImprovingCard[] cards; //массив карт
+    public List<Card> cards; //массив карт
 
     private float timeLastCreateMob;
     private float timeLastCreateMob2;
@@ -40,11 +41,17 @@ public class CommanderAI : MonoBehaviour {
             //обновляем параметры моба
             foreach (var card in cards) //для каждого объекта в массиве карт
             {
-                //ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
-                //if (card)
-                //{
-                    card.ToImprove(newMob);
-                //}
+                if (card)
+                {
+                    if (card.type == EnumCard.ImprovingCard)// если карта улучшения
+                    {
+                        ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
+                        if (improvingCard)
+                        {
+                            improvingCard.ToImprove(newMob);
+                        }
+                    }
+                }
             }
 
             //указываем время создания последнего моба
@@ -60,12 +67,17 @@ public class CommanderAI : MonoBehaviour {
             //обновляем параметры моба
             foreach (var card in cards) //для каждого объекта в массиве карт
             {
-                ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
-                if (improvingCard)
+                if (card)
                 {
-                    improvingCard.ToImprove(newMob);
+                    if (card.type == EnumCard.ImprovingCard)// если карта улучшения
+                    {
+                        ImprovingCard improvingCard = card.GetComponent<ImprovingCard>();
+                        if (improvingCard)
+                        {
+                            improvingCard.ToImprove(newMob);
+                        }
+                    }
                 }
-                
             }
 
             //указываем время создания последнего моба
@@ -79,4 +91,13 @@ public class CommanderAI : MonoBehaviour {
         return enemy.tower.transform;
     }
 
+
+
+
+    //работа с картами
+    //добавляем себе разыгранную карту
+    public void AddCard(Card card)
+    {
+        cards.Add(card);
+    }
 }

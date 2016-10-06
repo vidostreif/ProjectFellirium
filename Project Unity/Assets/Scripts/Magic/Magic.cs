@@ -25,8 +25,8 @@ public class Magic : MonoBehaviour {
     void Update()
     {
 
-        //Если нажали левую кнопку мыши
-        if (Input.GetMouseButtonDown(0))
+        //Если нажали левую кнопку мыши при выбранной магии
+        if (Input.GetMouseButtonDown(0) && currentMagic != 0)
         {
             switch (currentMagic)
             {
