@@ -20,10 +20,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012667487468}
   - 212: {fileID: 212000011061154134}
-  - 114: {fileID: 114000012185560142}
-  - 114: {fileID: 114000010426776232}
-  - 114: {fileID: 114000014210417198}
   - 60: {fileID: 60000012030446240}
+  - 114: {fileID: 114000011994764604}
+  - 114: {fileID: 114000010426776232}
+  - 114: {fileID: 114000012185560142}
+  - 114: {fileID: 114000014210417198}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Tower
@@ -161,7 +162,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f84902bacd36a47a69eb88d4014869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Commander: {fileID: 0}
+--- !u!114 &114000011994764604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012526439636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17f4518a531d9d48bf80e88f1e9521c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commander: {fileID: 0}
 --- !u!114 &114000012185560142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -177,6 +189,8 @@ MonoBehaviour:
     type: 2}
   attackPause: 0.2
   damage: 15
+  attackDistance: 0
+  target: {fileID: 0}
 --- !u!114 &114000014210417198
 MonoBehaviour:
   m_ObjectHideFlags: 1

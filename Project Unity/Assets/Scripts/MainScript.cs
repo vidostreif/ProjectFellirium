@@ -49,8 +49,8 @@ public class MainScript : MonoBehaviour {
         //newMob.name = mob.name;
 
         //указываем команду
-        MobAI mobAI = newMob.GetComponent<MobAI>();
-        mobAI.commander = commander;
+        Team TeamAI = newMob.GetComponent<Team>();
+        TeamAI.commander = commander;
 
         return newMob;
     }
@@ -77,7 +77,7 @@ public class MainScript : MonoBehaviour {
                 //{
                     //float MobDistance = Vector3.Distance(mob.transform.position, transformCalling.position); //Меряем дистанцию от цели до пушки, записываем её в переменную
 
-                    if (target.Commander == commander.enemy && target.isLive)
+                    if (target.commander == commander.enemy && target.isLive)
                     {
                         closestMobDistance = distance; //дистанция до ближайшей цели
                         nearestmob = target.gameObject;//устанавливаем его как ближайшая

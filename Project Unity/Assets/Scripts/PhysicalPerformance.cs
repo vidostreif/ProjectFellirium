@@ -10,46 +10,34 @@ public class PhysicalPerformance : MonoBehaviour {
     [SerializeField] private float movementSpeed;
     [SerializeField] private float physicalResistance;
     [SerializeField] private float magicResistance;
-    [SerializeField] private float attackDistance;//область зрения
+    //[SerializeField] private float attackDistance;//область зрения
 
     //private MobAI thisMobAI;
     private SpriteRenderer thisSpriteRenderer;
     private Rigidbody2D thisRigidbody2D;
 
-    public CommanderAI Commander { get; private set; }
+    public CommanderAI commander { get; private set; }
     public bool isLive { get; private set; }
 
-    public float GetAttackDistance()
-    {
-        return attackDistance;
-    }
+    //public float GetAttackDistance()
+    //{
+    //    return attackDistance;
+    //}
     // Use this for initialization
     void Start ()
     {
-        MobAI thisMobAI = GetComponent<MobAI>();
+        Team thisMobTeam = GetComponent<Team>();
 
-        if (thisMobAI)
+        if (thisMobTeam)
         {
-            Commander = thisMobAI.commander;
+            commander = thisMobTeam.commander;
         }
-        else
-        {
-            TowerAI thisTowerAI = GetComponent<TowerAI>();
-
-            if (thisTowerAI)
-            {
-                Commander = thisTowerAI.Commander;
-            }
-        }
-
-
 
         thisSpriteRenderer = GetComponent<SpriteRenderer>();
         //ссылка на физику
         thisRigidbody2D = GetComponent<Rigidbody2D>();
 
-        //добовляем небольшой рандов в дистанцию атаки моба для красоты
-        attackDistance = Random.Range(attackDistance*0.99f, attackDistance * 1.01f);
+
         isLive = true;
     }
 

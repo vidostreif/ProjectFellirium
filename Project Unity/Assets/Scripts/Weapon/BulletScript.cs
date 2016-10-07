@@ -56,7 +56,7 @@ public class BulletScript : MonoBehaviour {
             if (otherPhysicalPerformance)//Если physicalPerformance есть
             {
                 //эсли это враг и он жив
-                if (enemy == otherPhysicalPerformance.Commander && otherPhysicalPerformance.isLive)
+                if (enemy == otherPhysicalPerformance.commander && otherPhysicalPerformance.isLive)
                 {
                     //то наносим дамаг
                     otherPhysicalPerformance.SetPhysicalDamage(Damage);

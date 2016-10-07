@@ -51,7 +51,7 @@ public class AddWarCard : MonoBehaviour
         //active = true;
         //TimeActivate = Time.time;
 
-        CommanderAI commander = GetComponent<Card>().commander;//командир карты
+        CommanderAI commander = GetComponent<Team>().commander;//командир карты
         Vector3 towerPosition = commander.tower.transform.position;//позиция башни командира
 
         //создаем мобов из списка 
@@ -61,10 +61,10 @@ public class AddWarCard : MonoBehaviour
             {
                 //создаем моба
                 GameObject mob = (GameObject)Instantiate(war.mob, new Vector3(Random.Range(towerPosition.x - 2, towerPosition.x + 2), towerPosition.y, towerPosition.z), Quaternion.identity);
-                MobAI mobAI = mob.GetComponent<MobAI>();
-                if (mobAI)
+                Team mobTeam = mob.GetComponent<Team>();
+                if (mobTeam)
                 {
-                    mobAI.commander = commander;
+                    mobTeam.commander = commander;
                 }
                 else
                 {

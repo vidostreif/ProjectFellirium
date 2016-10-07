@@ -10,13 +10,15 @@ public class MobAI : MonoBehaviour {
     private MeleeWeapon thisMeleeWeapon;
     private Transform enemyTowerTransform;
     private RangeViewTriger rangeViewScript;
-    public CommanderAI commander;
-   
+
+    public CommanderAI commander { get; private set; }
+
     void Start ()
     {
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
         thisLongRangeWeapon = GetComponent<LongRangeWeapon>();
         thisMeleeWeapon = GetComponent<MeleeWeapon>();
+        commander = GetComponent<Team>().commander;
     }
 
     // Update is called once per frame
@@ -25,38 +27,34 @@ public class MobAI : MonoBehaviour {
         if (thisPhysicalPerformance.isLive)
         {
             GameObject target = null;
-            //если есть оружие ближнего и дальнего боя то ищем врага на всем расстоянии поле зрения
-            if (thisMeleeWeapon && thisLongRangeWeapon)
+
+            if (thisMeleeWeapon)//если только ближнего боя, то ищем врага в блези
             {
-                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance());
-            }
-            else if (thisMeleeWeapon)//если только ближнего боя, то ищем врага в блези
-            {
-                target = MainScript.TargetSelection(transform, commander, 2);
+                target = thisMeleeWeapon.target;
             }
             else if (thisLongRangeWeapon)//если только дальнего боя, то ищем врага в далеке
             {
-                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance(), 2);
+                target = thisLongRangeWeapon.target;
             }
 
-            //если есть цель, тогда атакуем
+            //если есть цель, тогда стоим на месте
             if (target != null)
             {
                 //останавливаемся
                 thisPhysicalPerformance.StopMove();
 
-                float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+                //float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-                //если дистанция маленькая, и есть оружие ближнего боя, то бьем оружием ближнего боя
-                if (distanceToTarget <= 2 && thisMeleeWeapon)
-                {
-                    thisMeleeWeapon.Attack(target);
-                }
-                else if(distanceToTarget >= 2 && thisLongRangeWeapon)//иначе если есть оружие дальнего боя и расстояние больше указанного
-                {                    
-                    //стреляем
-                    thisLongRangeWeapon.Shot(target, commander);
-                }
+                ////если дистанция маленькая, и есть оружие ближнего боя, то бьем оружием ближнего боя
+                //if (distanceToTarget <= 2 && thisMeleeWeapon)
+                //{
+                //    thisMeleeWeapon.Attack(target);
+                //}
+                //else if(distanceToTarget >= 2 && thisLongRangeWeapon)//иначе если есть оружие дальнего боя и расстояние больше указанного
+                //{                    
+                //    //стреляем
+                //    thisLongRangeWeapon.Shot(target, commander);
+                //}
 
             }
             else//иначе движемся к вражеской башне

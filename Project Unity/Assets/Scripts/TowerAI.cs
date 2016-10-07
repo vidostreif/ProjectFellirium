@@ -3,7 +3,7 @@ using System.Collections;
 
 public class TowerAI : MonoBehaviour {
 
-    public CommanderAI Commander;
+    public CommanderAI commander { get; private set; }
     //public float minAttackDistance = 3;
     //public float maxAttackDistance = 10;
 
@@ -12,7 +12,7 @@ public class TowerAI : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        commander = GetComponent<Team>().commander;
         thisLongRangeWeapon = GetComponent<LongRangeWeapon>();
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
 
@@ -48,22 +48,22 @@ public class TowerAI : MonoBehaviour {
             Application.LoadLevel(Application.loadedLevel);
         }
 
-        if (Commander)//если есть командир
-        {
-            //находим цель
-            GameObject target = MainScript.TargetSelection(transform, Commander, thisPhysicalPerformance.GetAttackDistance());
+        //if (commander)//если есть командир
+        //{
+        //    //находим цель
+        //    GameObject target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance());
 
-            //если есть цель, то стреляем
-            if (target != null)
-            {
-                //стреляем
-                thisLongRangeWeapon.Shot(target, Commander);
-            }
-        }
-        else
-        {
-             //сделать визуальное представление отсутствия командира
-        }
+        //    //если есть цель, то стреляем
+        //    if (target != null)
+        //    {
+        //        //стреляем
+        //        thisLongRangeWeapon.Shot(target, commander);
+        //    }
+        //}
+        //else
+        //{
+        //     //сделать визуальное представление отсутствия командира
+        //}
 
 
     }

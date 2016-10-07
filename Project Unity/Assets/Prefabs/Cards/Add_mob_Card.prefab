@@ -22,6 +22,7 @@ GameObject:
   - 212: {fileID: 212000011613176476}
   - 61: {fileID: 61000012030682312}
   - 114: {fileID: 114000011986003436}
+  - 114: {fileID: 114000014063880904}
   - 114: {fileID: 114000010771377140}
   - 114: {fileID: 114000014285684686}
   m_Layer: 0
@@ -69,7 +70,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dacef9c4d94e344988758da4d7b67d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  commander: {fileID: 0}
   type: 0
 --- !u!114 &114000011986003436
 MonoBehaviour:
@@ -101,6 +101,18 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114000014063880904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010925225002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17f4518a531d9d48bf80e88f1e9521c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  commander: {fileID: 0}
 --- !u!114 &114000014285684686
 MonoBehaviour:
   m_ObjectHideFlags: 1

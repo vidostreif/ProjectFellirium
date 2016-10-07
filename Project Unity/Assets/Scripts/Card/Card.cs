@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class Card : MonoBehaviour {
-    public CommanderAI commander;
+    public CommanderAI commander { get; private set; }
     public EnumCard type;
 
     //private Component dopComponent;
@@ -14,7 +14,7 @@ public class Card : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        commander = GetComponent<Team>().commander;
         thisTransform = GetComponent<Transform>();
         newPosition = thisTransform.position;
         newScale = thisTransform.localScale;
