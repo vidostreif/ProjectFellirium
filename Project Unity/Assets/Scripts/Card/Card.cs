@@ -3,8 +3,10 @@ using System.Collections;
 using System;
 
 public class Card : MonoBehaviour {
-    [SerializeField] private CommanderAI commander;
+    public CommanderAI commander;
     public EnumCard type;
+
+    //private Component dopComponent;
 
     private Transform thisTransform;
     private Vector3 newPosition;
@@ -48,6 +50,13 @@ public class Card : MonoBehaviour {
         if (GetComponent<ImprovingCard>())
         {
             type = EnumCard.ImprovingCard; //карта улучшения
+            //dopComponent = GetComponent<ImprovingCard>();
+        }
+
+        if (GetComponent<AddWarCard>())
+        {
+            type = EnumCard.AddWarCard; //карта добавления мобов
+            //dopComponent = GetComponent<AddWarCard>();
         }
 
 
@@ -60,9 +69,23 @@ public class Card : MonoBehaviour {
         thisTransform.localScale = Vector3.Lerp(thisTransform.localScale, newScale, Time.deltaTime * 1f);
     }
 
+
     public void MouseDown()
     {
         commander.PlayCard(this);
+    }
+
+    public void Activate()
+    {
+        if (type == EnumCard.ImprovingCard)
+        {
+            
+        }
+        else if (type == EnumCard.AddWarCard)
+        {
+            AddWarCard dopComponent = GetComponent<AddWarCard>();
+            dopComponent.Activate();
+        }
     }
 
     //определяем новые место и размер карты

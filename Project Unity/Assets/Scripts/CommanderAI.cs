@@ -101,11 +101,21 @@ public class CommanderAI : MonoBehaviour {
     //разыграть карту
     public void PlayCard(Card card)
     {
-        if (card.type == EnumCard.ImprovingCard)
-        {
-            //добавляем карту в список активных
-            AddCardInActionsCards(card);
-        }
+        //if (card.type == EnumCard.ImprovingCard)
+        //{
+        //    //добавляем карту в список активных
+        //    AddCardInActionsCards(card);
+        //}
+        //else if (card.type == EnumCard.AddWarCard)
+        //{
+
+        //}
+
+        //добавляем карту в список активных
+        AddCardInActionsCards(card);
+
+        //активировать карту
+        card.Activate();
 
         //убираем карту из руки
         DeleteCardFromHand(card);
