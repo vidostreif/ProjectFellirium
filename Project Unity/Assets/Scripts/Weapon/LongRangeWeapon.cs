@@ -10,7 +10,8 @@ public class LongRangeWeapon : MonoBehaviour {
 
     private Transform thisTransform;
     private PhysicalPerformance thisPhysicalPerformance;
-    private float timeLastAttack = 0;
+    private float timeLastAttack = 0;//время последней атаки
+    private float timeLastSearch = 0;//время последнего вызова функции поиска цели
 
     public CommanderAI commander { get; private set; }
     public GameObject target;
@@ -26,19 +27,28 @@ public class LongRangeWeapon : MonoBehaviour {
         attackDistance = Random.Range(attackDistance * 0.99f, attackDistance * 1.01f);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (thisPhysicalPerformance.isLive)
         {
+            //ищем цель 10 раз в секунду
+            if (Time.time > timeLastSearch + 0.2f)
+            {
+                target = MainScript.TargetSelection(transform, commander, attackDistance, 2);
+                timeLastSearch = Time.time;
+            }
+
             //если прошло время после последней атаки больше чем attackPause
             if (Time.time > timeLastAttack + attackPause)
             {
-                target = MainScript.TargetSelection(transform, commander, attackDistance, 2);
+                //target = MainScript.TargetSelection(transform, commander, attackDistance, 2);
 
-                if (target != null)
+                if (target != null)//если есть цель
                 {
                     Attack(target);
+                    timeLastAttack = Time.time;
                 }
+           
             }
         }
     }

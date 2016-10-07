@@ -10,6 +10,7 @@ public class MeleeWeapon : MonoBehaviour {
     private Transform thisTransform;
     private PhysicalPerformance thisPhysicalPerformance;
     private float timeLastAttack = 0;
+    private float timeLastSearch = 0;//время последнего вызова функции поиска цели
 
     public CommanderAI commander { get; private set; }
     public GameObject target;
@@ -25,18 +26,33 @@ public class MeleeWeapon : MonoBehaviour {
         attackDistance = Random.Range(attackDistance * 0.99f, attackDistance * 1.01f);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (thisPhysicalPerformance.isLive)
         {
+            //ищем цель 10 раз в секунду
+            if (Time.time > timeLastSearch + 0.2f)
+            {
+                target = MainScript.TargetSelection(transform, commander, attackDistance);
+                timeLastSearch = Time.time;
+            }
+
             //если прошло время после последней атаки больше чем attackPause
             if (Time.time > timeLastAttack + attackPause)
             {
-                target = MainScript.TargetSelection(transform, commander, attackDistance);
+                //target = MainScript.TargetSelection(transform, commander, attackDistance);
 
                 if (target != null)
                 {
                     Attack(target);
+
+                    ////если убили цель, то сразу ищем следующую
+                    //if (!target.GetComponent<PhysicalPerformance>().isLive)
+                    //{
+                    //    target = MainScript.TargetSelection(transform, commander, attackDistance);
+                    //}
+
+                    timeLastAttack = Time.time;
                 }
 
             }
