@@ -21,7 +21,7 @@ public class LongRangeWeapon : MonoBehaviour {
     {
         if (Time.time > timeLastAttack + attackPause)
         {
-            Rigidbody2D targetRigidbody2D = target.GetComponent<Rigidbody2D>();           
+                   
 
             //расчитывем направление выстрела
             Vector3 vShotDirection = new Vector3(target.transform.position.x, target.transform.position.y - 1, target.transform.position.z) - thisTransform.position;            
@@ -38,17 +38,22 @@ public class LongRangeWeapon : MonoBehaviour {
             BulletScript newBulletBulletScript = newBullet.GetComponent<BulletScript>();
             Rigidbody2D newBulletRigidbody = newBullet.GetComponent<Rigidbody2D>();
 
-            //Скорость цели 
-            //если увеличиваем, то снижаем угол
+            Rigidbody2D targetRigidbody2D = target.GetComponent<Rigidbody2D>();
             float targetSpeed = 0;
-            if (distance > 7 * thisTransform.localScale.x)//если дистанция меньше чем
+            if (targetRigidbody2D)//если у цели есть targetRigidbody2D
             {
-                //targetSpeed = Mathf.Sqrt((Mathf.Abs(targetRigidbody2D.velocity.x) / distance / 1.9f / (newBulletRigidbody.gravityScale)));
-                targetSpeed = ((Mathf.Abs(targetRigidbody2D.velocity.x - targetRigidbody2D.velocity.y/2)) / distance * 1.9f / Mathf.Sqrt(newBulletRigidbody.gravityScale));
+                //Скорость цели 
+                //если увеличиваем, то снижаем угол                
+                if (distance > 7 * thisTransform.localScale.x)//если дистанция меньше чем
+                {
+                    //targetSpeed = Mathf.Sqrt((Mathf.Abs(targetRigidbody2D.velocity.x) / distance / 1.9f / (newBulletRigidbody.gravityScale)));
+                    targetSpeed = ((Mathf.Abs(targetRigidbody2D.velocity.x - targetRigidbody2D.velocity.y / 2)) / distance * 1.9f / Mathf.Sqrt(newBulletRigidbody.gravityScale));
 
-                //targetSpeed = Mathf.Sqrt(Mathf.Abs(targetRigidbody2D.velocity.x) * (distance)/1700 / (newBulletRigidbody.gravityScale));
+                    //targetSpeed = Mathf.Sqrt(Mathf.Abs(targetRigidbody2D.velocity.x) * (distance)/1700 / (newBulletRigidbody.gravityScale));
 
+                }
             }
+
 
             //корректировка на угол минус скорость цели
             vShotDirection = new Vector3(vShotDirection.x, vShotDirection.y + (agleT / 90) - targetSpeed, vShotDirection.z);

@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Card
   - GameController
+  - Tower
   layers:
   - Default
   - TransparentFX

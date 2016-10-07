@@ -4,12 +4,13 @@ using UnityEngine;
 public class MainScript : MonoBehaviour {
     public CommanderAI playerCommander { get; private set; }
 
-	// Use this for initialization
-	void Start () {
+    private GameObject[] commanders;
+    // Use this for initialization
+    void Start () {
 
         //находим коммандира которым должен управлять игрок
-        GameObject[] commaders = GameObject.FindGameObjectsWithTag("Commander");
-        foreach (GameObject commader in commaders) //для каждого моба в массиве
+        commanders = GameObject.FindGameObjectsWithTag("Commander");
+        foreach (GameObject commader in commanders) //для каждого моба в массиве
         {
             CommanderAI commaderAI = commader.GetComponent<CommanderAI>();
 
@@ -57,32 +58,56 @@ public class MainScript : MonoBehaviour {
     //Выбор цели
     public static GameObject TargetSelection(Transform transformCalling, CommanderAI commander, float maxAttackDistance, float minAttackDistance = 0)
     {
-        float closestMobDistance = maxAttackDistance; //дистанция до ближайшего моба
-        GameObject nearestmob = null; //инициализация переменной ближайшего моба
-        GameObject[] sortingMobs = GameObject.FindGameObjectsWithTag("Mob"); //находим всех мобов с тегом Mob и создаём массив для сортировки
+        float closestMobDistance = maxAttackDistance; //дистанция до ближайшей цели
+        GameObject nearestmob = null; //инициализация переменной ближайшей цели
+        //GameObject[] sortingTargets = GameObject.FindGameObjectsWithTag("Mob, "); //находим всех мобов с тегом Mob и создаём массив для сортировки
+        PhysicalPerformance[] sortingTargets = FindObjectsOfType(typeof(PhysicalPerformance)) as PhysicalPerformance[]; //находим все объекты с компонентом PhysicalPerformance
 
-        foreach (GameObject mob in sortingMobs) //для каждого моба в массиве
+
+        foreach (PhysicalPerformance target in sortingTargets) //для каждой цели в массиве
         {
-            float distance = Vector3.Distance(mob.transform.position, transformCalling.position);//дистанция до текущего моба
+            float distance = Vector3.Distance(target.transform.position, transformCalling.position);//дистанция до текущей цели
 
-            //если дистанция до моба в указанных пределах, и меньше чем до предыдущи проверенного моба
+            //если дистанция до цели в указанных пределах, и меньше чем до предыдущей проверенной цели
             if (distance > minAttackDistance && distance < maxAttackDistance && distance < closestMobDistance)
             {
                 //Узнаем враг ли он и жив ли
-                PhysicalPerformance mobPhysicalPerformance = mob.GetComponent<PhysicalPerformance>();
-                if (mobPhysicalPerformance)
-                {
-                    //float MobDistance = Vector3.Distance(mob.transform.position, transformCalling.position); //Меряем дистанцию от моба до пушки, записываем её в переменную
+                //PhysicalPerformance targetPhysicalPerformance = target.GetComponent<PhysicalPerformance>();
+                //if (targetPhysicalPerformance)
+                //{
+                    //float MobDistance = Vector3.Distance(mob.transform.position, transformCalling.position); //Меряем дистанцию от цели до пушки, записываем её в переменную
 
-                    if (mobPhysicalPerformance.Commander == commander.enemy && mobPhysicalPerformance.isLive)
+                    if (target.Commander == commander.enemy && target.isLive)
                     {
-                        closestMobDistance = distance; //дистанция до ближайшего моба
-                        nearestmob = mob;//устанавливаем его как ближайшего
+                        closestMobDistance = distance; //дистанция до ближайшей цели
+                        nearestmob = target.gameObject;//устанавливаем его как ближайшая
                     }
-                }
+                //}
 
             }
         }
-        return nearestmob; //возвращаем ближайшего моба
+
+        //if (nearestmob == null)//если не нашли мобов в поле зрения, то ищем башню противника
+        //{
+        //    sortingTargets = GameObject.FindGameObjectsWithTag("Tower"); //находим всех башни
+        //}
+
+        return nearestmob; //возвращаем ближайшую цель
     }
+
+    //public CommanderAI Findcommander()
+    //{        
+    //    //и ищем своего командира
+    //    foreach (GameObject commander in commaders)
+    //    {
+    //        CommanderAI commanderAI = commander.GetComponent<CommanderAI>();
+    //        if (commanderAI)
+    //        {
+    //            if (commanderAI.tower == this.gameObject)//если у командира указана эта башня 
+    //            {
+    //                commaders = commanderAI;
+    //            }
+    //        }
+    //    }
+    //}
 }

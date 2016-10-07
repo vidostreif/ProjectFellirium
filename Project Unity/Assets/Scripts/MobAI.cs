@@ -32,11 +32,11 @@ public class MobAI : MonoBehaviour {
             }
             else if (thisMeleeWeapon)//если только ближнего боя, то ищем врага в блези
             {
-                target = MainScript.TargetSelection(transform, commander, 1);
+                target = MainScript.TargetSelection(transform, commander, 2);
             }
             else if (thisLongRangeWeapon)//если только дальнего боя, то ищем врага в далеке
             {
-                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance(), 1);
+                target = MainScript.TargetSelection(transform, commander, thisPhysicalPerformance.GetAttackDistance(), 2);
             }
 
             //если есть цель, тогда атакуем
@@ -48,11 +48,11 @@ public class MobAI : MonoBehaviour {
                 float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
                 //если дистанция маленькая, и есть оружие ближнего боя, то бьем оружием ближнего боя
-                if (distanceToTarget <= 1 && thisMeleeWeapon)
+                if (distanceToTarget <= 2 && thisMeleeWeapon)
                 {
                     thisMeleeWeapon.Attack(target);
                 }
-                else if(distanceToTarget >= 1 && thisLongRangeWeapon)//иначе если есть оружие дальнего боя и расстояние больше указанного
+                else if(distanceToTarget >= 2 && thisLongRangeWeapon)//иначе если есть оружие дальнего боя и расстояние больше указанного
                 {                    
                     //стреляем
                     thisLongRangeWeapon.Shot(target, commander);

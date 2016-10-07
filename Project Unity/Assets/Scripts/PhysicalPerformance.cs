@@ -12,7 +12,7 @@ public class PhysicalPerformance : MonoBehaviour {
     [SerializeField] private float magicResistance;
     [SerializeField] private float attackDistance;//область зрения
 
-    private MobAI thisMobAI;
+    //private MobAI thisMobAI;
     private SpriteRenderer thisSpriteRenderer;
     private Rigidbody2D thisRigidbody2D;
 
@@ -26,8 +26,23 @@ public class PhysicalPerformance : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        thisMobAI = GetComponent<MobAI>();
-        Commander = thisMobAI.commander;
+        MobAI thisMobAI = GetComponent<MobAI>();
+
+        if (thisMobAI)
+        {
+            Commander = thisMobAI.commander;
+        }
+        else
+        {
+            TowerAI thisTowerAI = GetComponent<TowerAI>();
+
+            if (thisTowerAI)
+            {
+                Commander = thisTowerAI.Commander;
+            }
+        }
+
+
 
         thisSpriteRenderer = GetComponent<SpriteRenderer>();
         //ссылка на физику
@@ -37,11 +52,6 @@ public class PhysicalPerformance : MonoBehaviour {
         attackDistance = Random.Range(attackDistance*0.99f, attackDistance * 1.01f);
         isLive = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     public void SetPhysicalDamage(float damage)
     {
@@ -54,7 +64,7 @@ public class PhysicalPerformance : MonoBehaviour {
 
             if (hp <= 0)
             {
-                //если нанисли смертельный урон, то помечаем моба как убитый
+                //если нанисли смертельный урон, то помечаем как убитый
                 isLive = false;
                 //Destroy(this.gameObject);
                 //Debug.Log("Моб умер!");
@@ -79,6 +89,8 @@ public class PhysicalPerformance : MonoBehaviour {
                 thisSpriteRenderer.flipX = false;
             }
 
+            //ToTurn(thisRigidbody2D.velocity);//повернуть
+
             //моб движется в указанном направлении с учетом рельефа
             thisRigidbody2D.velocity = new Vector2(directionOnTarget.normalized.x * Time.deltaTime * movementSpeed, thisRigidbody2D.velocity.y);
 
@@ -94,4 +106,11 @@ public class PhysicalPerformance : MonoBehaviour {
     }
 
 
+    ////поворачиваем в указанную сторону по указаной оси y
+    //public void ToTurn(Vector3 targetPosition)
+    //{
+    //    //поворачиваем снаряд в сторону движения
+    //    var angle = Vector2.Angle(Vector2.left, targetPosition);//угол между направлением и осью х
+    //    transform.eulerAngles = new Vector3(0f, 0f, 0 < targetPosition.y ? -angle : angle);//поворачиваем с учетом увеличивается высота или уменьшается
+    //}
 }

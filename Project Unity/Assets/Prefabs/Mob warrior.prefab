@@ -139,8 +139,7 @@ MonoBehaviour:
   movementSpeed: 200
   physicalResistance: 10
   magicResistance: 10
-  attackDistance: 1
-  isLive: 1
+  attackDistance: 2
 --- !u!114 &114000012297958392
 MonoBehaviour:
   m_ObjectHideFlags: 1

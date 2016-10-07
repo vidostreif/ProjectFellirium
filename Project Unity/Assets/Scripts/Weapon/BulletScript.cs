@@ -66,7 +66,7 @@ public class BulletScript : MonoBehaviour {
             }
             else
             {
-                //если не моб, то просто деактивируем
+                //если не цель, то просто деактивируем
                 DisableMissile(other.gameObject);
             }
         }
