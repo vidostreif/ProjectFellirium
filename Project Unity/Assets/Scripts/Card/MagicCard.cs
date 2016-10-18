@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MagicCard : MonoBehaviour {
 
@@ -8,10 +9,11 @@ public class MagicCard : MonoBehaviour {
     //для магии "град стрел"
     public GameObject bulletPrefab; //префаб стрелы
     public int numberOfArrows = 20; //количество стрел
-    public float damageOfArrows = 30; // урон стрел
+    public int damageFromArrow = 30; // урон стрел
 
     //для магии "взрыв"
-
+    public int damageFromExplosion = 150; // урон от взрыва 
+    public int radiusOfExplosion = 10; // радиус взрыва
 
     public void Activate()
     {
@@ -32,6 +34,13 @@ public class MagicCard : MonoBehaviour {
             GameObject target = MainScript.TargetSelection(commander.transform, commander, 500);
             //создаем град стрел
             CreateStormOfArrows(target.transform.position, commander);
+        }
+        else if (magic == EnumMagic.Explosion)// если взрыв
+        {
+            //находим ближайшего противника
+            GameObject target = MainScript.TargetSelection(commander.transform, commander, 500);
+
+            Explosion(damageFromExplosion, radiusOfExplosion, target.transform.position, commander);//магия взрыва
         }
 
     }
@@ -60,7 +69,7 @@ public class MagicCard : MonoBehaviour {
             //указываем кто враг
             newBulletBulletScript.enemy = commander.enemy;
             //указываем урон
-            newBulletBulletScript.Damage = damageOfArrows;
+            newBulletBulletScript.Damage = damageFromArrow;
 
             //стреляем
             Vector2 attackForce = vShotDirection * newBulletRigidbody.mass * Mathf.Sqrt(newBulletRigidbody.gravityScale) * Random.Range(708f, 711f);
@@ -70,5 +79,39 @@ public class MagicCard : MonoBehaviour {
             newBulletRigidbody.AddForceAtPosition(attackForce, new Vector2(0, 0));
         }
 
+    }
+
+    
+    public void Explosion(int damage, float radius, Vector3 positionExplosion, CommanderAI commander)//магия взрыва
+    {
+        //смещаем точку взрыва за врага
+        //расчитывем направление смещения 
+        float shiftDirection = positionExplosion.x - commander.enemy.transform.position.x;
+        //shiftDirection.Normalize();
+
+        //новая точка взрыва 
+        positionExplosion = positionExplosion + new Vector3(shiftDirection > 0 ? -radius* 0.7f : radius * 0.7f, 3, 0);
+
+        //находим все объекты с PhysicalPerformance в радиусе
+        List<GameObject> objectsToInteract = MainScript.FindObjectsInRadiusWithComponent(positionExplosion, radius, typeof(PhysicalPerformance));
+        foreach (GameObject currentObject in objectsToInteract) //для каждого объекта в массиве
+        {
+            Rigidbody2D currentObjectRigidbody2D = currentObject.GetComponent<Rigidbody2D>();
+            PhysicalPerformance currentObjectPhysicalPerformance = currentObject.GetComponent<PhysicalPerformance>();
+            if (currentObjectRigidbody2D && currentObjectPhysicalPerformance)//если есть физика и скрип физ параметров
+            {
+                if (currentObjectPhysicalPerformance.commander.enemy == commander)//если объект против нас
+                {
+                    //воздействуем на объект
+                    currentObjectPhysicalPerformance.SetPhysicalDamage(damage);//наносим урон
+                    //откидываем объект
+                    var dir = (currentObjectRigidbody2D.transform.position - positionExplosion);
+                    float wearoff = 1 - (dir.magnitude / radius);
+                    currentObjectRigidbody2D.AddForce(dir.normalized * damage * 500 * wearoff);
+
+                }
+
+            }
+        }
     }
 }

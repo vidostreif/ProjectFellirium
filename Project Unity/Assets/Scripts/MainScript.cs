@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MainScript : MonoBehaviour {
     public CommanderAI playerCommander { get; private set; }
@@ -95,19 +96,45 @@ public class MainScript : MonoBehaviour {
         return nearestmob; //возвращаем ближайшую цель
     }
 
-    //public CommanderAI Findcommander()
-    //{        
-    //    //и ищем своего командира
-    //    foreach (GameObject commander in commaders)
-    //    {
-    //        CommanderAI commanderAI = commander.GetComponent<CommanderAI>();
-    //        if (commanderAI)
-    //        {
-    //            if (commanderAI.tower == this.gameObject)//если у командира указана эта башня 
-    //            {
-    //                commaders = commanderAI;
-    //            }
-    //        }
-    //    }
-    //}
+    public static List<GameObject> FindObjectsInRadiusWithTag(Vector2 position, float Radius, string tag)//поиск объектов по тегу в радиусе
+    {
+        List<GameObject> objectsToInteract = new List<GameObject>();//список найденных объектов
+
+        GameObject[] findeObjects = GameObject.FindGameObjectsWithTag(tag); //находим всех объекты с тегом  и создаём массив из них
+
+        foreach (GameObject currentObject in findeObjects) //для каждого объекта в массиве
+        {
+
+            float distance = Vector2.Distance(currentObject.transform.position, position);//дистанция до объекта
+            if (distance <= Radius)//если объект находиться в радиусе действия
+            {               
+                //добавляем в список
+                objectsToInteract.Add(currentObject);                
+            }
+        }
+
+        return objectsToInteract;
+    }
+
+    
+    public static List<GameObject> FindObjectsInRadiusWithComponent(Vector2 position, float Radius, Type component)//поиск объектов по тегу в радиусе
+    {
+        List<GameObject> objectsToInteract = new List<GameObject>();//список найденных объектов
+
+        Component[] findeObjects = FindObjectsOfType(component) as Component[]; //находим всех объекты с компонентом и создаём массив из них
+
+        foreach (var currentObject in findeObjects) //для каждого объекта в массиве
+        {
+
+            float distance = Vector2.Distance(currentObject.transform.position, position);//дистанция до объекта
+            if (distance <= Radius)//если объект находиться в радиусе действия
+            {
+                //добавляем в список
+                objectsToInteract.Add(currentObject.gameObject);
+                
+            }
+        }
+
+        return objectsToInteract;
+    }
 }

@@ -17,12 +17,13 @@ class TestCustomize : Editor
         if (myMagicCard.magic == EnumMagic.StormOfArrows)
         {
             myMagicCard.bulletPrefab = (GameObject)EditorGUILayout.ObjectField("Префаб стрелы", myMagicCard.bulletPrefab, typeof(GameObject));
-            myMagicCard.damageOfArrows = EditorGUILayout.FloatField("Урон каждой стрелы", myMagicCard.damageOfArrows);
+            myMagicCard.damageFromArrow = EditorGUILayout.IntField("Урон от стрелы", myMagicCard.damageFromArrow);
             myMagicCard.numberOfArrows = EditorGUILayout.IntField("Количество стрел", myMagicCard.numberOfArrows);
         }
         else if (myMagicCard.magic == EnumMagic.Explosion)
         {
-
+            myMagicCard.damageFromExplosion = EditorGUILayout.IntField("Урон от взрыва", myMagicCard.damageFromExplosion);
+            myMagicCard.radiusOfExplosion = EditorGUILayout.IntField("Радиус взрыва", myMagicCard.radiusOfExplosion);
         }
         
 
