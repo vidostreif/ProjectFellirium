@@ -9,3 +9,9 @@ using System.Collections;
         AddEquipmentCard, //карта добавления снаряжения
         MagicCard //карта магии
     }
+
+    public enum EnumMagic
+    {
+        StormOfArrows, //град стрел
+        Explosion //взрыв
+    }

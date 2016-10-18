@@ -14,7 +14,14 @@ public class Card : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+
         commander = GetComponent<Team>().commander;
+        //проверка наличия командира
+        if (!commander)
+        {
+            Debug.Log("У карты " + gameObject.name + " не определен командир!");
+        }
+
         thisTransform = GetComponent<Transform>();
         newPosition = thisTransform.position;
         newScale = thisTransform.localScale;
@@ -59,6 +66,12 @@ public class Card : MonoBehaviour {
             //dopComponent = GetComponent<AddWarCard>();
         }
 
+        if (GetComponent<MagicCard>())
+        {
+            type = EnumCard.MagicCard; //карта магии
+            //dopComponent = GetComponent<AddWarCard>();
+        }
+
 
     }
 
@@ -84,6 +97,11 @@ public class Card : MonoBehaviour {
         else if (type == EnumCard.AddWarCard)
         {
             AddWarCard dopComponent = GetComponent<AddWarCard>();
+            dopComponent.Activate();
+        }
+        else if (type == EnumCard.MagicCard)
+        {
+            MagicCard dopComponent = GetComponent<MagicCard>();
             dopComponent.Activate();
         }
     }
