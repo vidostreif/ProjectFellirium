@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BulletScript : MonoBehaviour {
 
     public CommanderAI enemy;
     public float Damage { private get; set; }
+    public bool explode = false; // взрываться
+    public int radiusOfExplosion = 3; //радиус взрыва
+
     private float timeLive = 8; //время жизни
     private float timedeath; //что бы патрон не летел вечно, мы ограничим время его жизни
     private Rigidbody2D thisRigidbody2D;
@@ -48,29 +52,43 @@ public class BulletScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (activeMissile)
+        if (activeMissile)//если активный снаряд
         {
-            //берем скрипт physicalPerformance если он есть, иначе возвращается fallse
-            PhysicalPerformance otherPhysicalPerformance = other.gameObject.GetComponent<PhysicalPerformance>();
-
-            if (otherPhysicalPerformance)//Если physicalPerformance есть
+            if (explode)//если взрывной снаряд
             {
-                //эсли это враг и он жив
-                if (enemy == otherPhysicalPerformance.commander && otherPhysicalPerformance.isLive)
+                //находим все объекты с PhysicalPerformance в радиусе
+                GameObject[] objectsToInteract = MainScript.FindObjectsInRadiusWithComponent(transform.position, radiusOfExplosion, typeof(PhysicalPerformance));
+                foreach (GameObject currentObject in objectsToInteract) //для каждого объекта в массиве
                 {
-                    //то наносим дамаг
-                    otherPhysicalPerformance.SetPhysicalDamage(Damage);
+                    PhysicalPerformance currentObjectPhysicalPerformance = currentObject.GetComponent<PhysicalPerformance>();
+                        //эсли это враг и он жив
+                        if (enemy == currentObjectPhysicalPerformance.commander)
+                        {
+                        //то наносим дамаг
+                        currentObjectPhysicalPerformance.SetPhysicalDamage(Damage);
+                        }
+                }                
+            }
+            else//иначе обрабатываем только объект в который попали
+            {
+                //берем скрипт physicalPerformance если он есть, иначе возвращается fallse
+                PhysicalPerformance otherPhysicalPerformance = other.gameObject.GetComponent<PhysicalPerformance>();
 
-                    DisableMissile(other.gameObject);
+                if (otherPhysicalPerformance)//Если physicalPerformance есть
+                {
+                    //эсли это враг и он жив
+                    if (enemy == otherPhysicalPerformance.commander && otherPhysicalPerformance.isLive)
+                    {
+                        //то наносим дамаг
+                        otherPhysicalPerformance.SetPhysicalDamage(Damage);
+                    }
                 }
             }
-            else
-            {
-                //если не цель, то просто деактивируем
-                DisableMissile(other.gameObject);
-            }
+
+            DisableMissile(other.gameObject);//деативируем
         }
 
+        
 
     }
 
@@ -92,10 +110,22 @@ public class BulletScript : MonoBehaviour {
             thisRigidbody2D.isKinematic = true;
             //сообщаем, что снаряд более не активен
             activeMissile = false;
-            //делаем снаряд дочерним для объекта в который попали
-            transform.parent = target.transform;
-            //уничтожаем через секунд
-            Destroy(gameObject, 0.5f);
+
+            //если взрывается
+            if (explode)
+            {
+                //создаем эффект взрыва и сразу уничтожаем объект
+                SpecialEffectsHelper.Instance.Explosion(transform.position);
+                Destroy(gameObject);
+            }
+            else
+            {
+                //делаем снаряд дочерним для объекта в который попали
+                transform.parent = target.transform;
+                //уничтожаем через секунд
+                Destroy(gameObject, 0.5f);
+            }
+
         }
         
     }

@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1000012914275440}
   m_IsPrefabParent: 1
+--- !u!1 &1000012583550166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000013114090084}
+  m_Layer: 8
+  m_Name: groundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000012914275440
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +45,7 @@ GameObject:
   - 114: {fileID: 114000010983634948}
   - 114: {fileID: 114000012297958392}
   m_Layer: 8
-  m_Name: Mob shooter
+  m_Name: Mob bomber
   m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,11 +58,25 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012914275440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.572509, y: -7.31149, z: 0}
+  m_LocalPosition: {x: -17.532658, y: -24.754278, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 4000013114090084}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &4000013114090084
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012583550166}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.068, y: -1.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 4000011137625430}
   m_RootOrder: 0
 --- !u!50 &50000010752175456
 Rigidbody2D:
@@ -122,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4de2466ecbeb4747b27f1882ee77d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
+  bulletPrefab: {fileID: 1000012068142224, guid: ea73a5d992d0581499cdbea3fbc411cd,
     type: 2}
   attackPause: 2
   damage: 15
@@ -210,6 +239,6 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: df3a6c1a35f1d1448b0a3e565beff9e5, type: 3}
-  m_Color: {r: 0.11072664, g: 0.9411765, b: 0.9068129, a: 1}
+  m_Color: {r: 0.5955882, g: 0.19269031, b: 0.58447385, a: 1}
   m_FlipX: 0
   m_FlipY: 0

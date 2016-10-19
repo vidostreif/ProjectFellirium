@@ -90,10 +90,13 @@ public class MagicCard : MonoBehaviour {
         //shiftDirection.Normalize();
 
         //новая точка взрыва 
-        positionExplosion = positionExplosion + new Vector3(shiftDirection > 0 ? -radius* 0.7f : radius * 0.7f, 3, 0);
+        positionExplosion = positionExplosion + new Vector3(shiftDirection > 0 ? -radius* 0.7f : radius * 0.7f, -3, -5);
+
+        //создаем эфект взрыва
+        SpecialEffectsHelper.Instance.Explosion(positionExplosion);
 
         //находим все объекты с PhysicalPerformance в радиусе
-        List<GameObject> objectsToInteract = MainScript.FindObjectsInRadiusWithComponent(positionExplosion, radius, typeof(PhysicalPerformance));
+        GameObject[] objectsToInteract = MainScript.FindObjectsInRadiusWithComponent(positionExplosion, radius, typeof(PhysicalPerformance));
         foreach (GameObject currentObject in objectsToInteract) //для каждого объекта в массиве
         {
             Rigidbody2D currentObjectRigidbody2D = currentObject.GetComponent<Rigidbody2D>();
@@ -107,7 +110,7 @@ public class MagicCard : MonoBehaviour {
                     //откидываем объект
                     var dir = (currentObjectRigidbody2D.transform.position - positionExplosion);
                     float wearoff = 1 - (dir.magnitude / radius);
-                    currentObjectRigidbody2D.AddForce(dir.normalized * damage * 500 * wearoff);
+                    currentObjectRigidbody2D.AddForce(dir.normalized * damage * 50 * wearoff);
 
                 }
 

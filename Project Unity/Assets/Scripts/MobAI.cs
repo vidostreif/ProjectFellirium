@@ -10,9 +10,18 @@ public class MobAI : MonoBehaviour {
     private MeleeWeapon thisMeleeWeapon;
     private Transform enemyTowerTransform;
     private RangeViewTriger rangeViewScript;
+    private bool canAct = true; //может действовать
+    private Transform groundCheck;          // тригер определяющий землю
+    private bool grounded = false;          // мы на земле?
 
     public CommanderAI commander { get; private set; }
 
+    void Awake()
+    {
+        // поиск трансформа тригера определяющего землю
+        groundCheck = transform.Find("groundCheck");
+    }
+    
     void Start ()
     {
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
@@ -23,8 +32,12 @@ public class MobAI : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        //если жив
-        if (thisPhysicalPerformance.isLive)
+
+        // Определение земли
+        grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
+        
+        //если жив и может действовать
+        if (thisPhysicalPerformance.isLive && canAct && grounded)
         {
             GameObject target = null;
 
@@ -43,18 +56,6 @@ public class MobAI : MonoBehaviour {
                 //останавливаемся
                 thisPhysicalPerformance.StopMove();
 
-                //float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
-
-                ////если дистанция маленькая, и есть оружие ближнего боя, то бьем оружием ближнего боя
-                //if (distanceToTarget <= 2 && thisMeleeWeapon)
-                //{
-                //    thisMeleeWeapon.Attack(target);
-                //}
-                //else if(distanceToTarget >= 2 && thisLongRangeWeapon)//иначе если есть оружие дальнего боя и расстояние больше указанного
-                //{                    
-                //    //стреляем
-                //    thisLongRangeWeapon.Shot(target, commander);
-                //}
 
             }
             else//иначе движемся к вражеской башне

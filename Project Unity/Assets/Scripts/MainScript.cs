@@ -96,7 +96,7 @@ public class MainScript : MonoBehaviour {
         return nearestmob; //возвращаем ближайшую цель
     }
 
-    public static List<GameObject> FindObjectsInRadiusWithTag(Vector2 position, float Radius, string tag)//поиск объектов по тегу в радиусе
+    public static GameObject[] FindObjectsInRadiusWithTag(Vector2 position, float Radius, string tag)//поиск объектов по тегу в радиусе
     {
         List<GameObject> objectsToInteract = new List<GameObject>();//список найденных объектов
 
@@ -113,11 +113,11 @@ public class MainScript : MonoBehaviour {
             }
         }
 
-        return objectsToInteract;
+        return objectsToInteract.ToArray();
     }
 
     
-    public static List<GameObject> FindObjectsInRadiusWithComponent(Vector2 position, float Radius, Type component)//поиск объектов по тегу в радиусе
+    public static GameObject[] FindObjectsInRadiusWithComponent(Vector2 position, float Radius, Type component)//поиск объектов по тегу в радиусе
     {
         List<GameObject> objectsToInteract = new List<GameObject>();//список найденных объектов
 
@@ -135,6 +135,6 @@ public class MainScript : MonoBehaviour {
             }
         }
 
-        return objectsToInteract;
+        return objectsToInteract.ToArray();
     }
 }
