@@ -3,9 +3,9 @@ using System.Collections;
 
 public class MeleeWeapon : MonoBehaviour {
     [Header("Редактирование атрибутов:")]
-    [SerializeField] private float attackPause;
-    [SerializeField] private float damage;
-    [SerializeField] private float attackDistance;
+    public int attackPause;
+    public int damage;
+    public float attackDistance;
 
     private Transform thisTransform;
     private PhysicalPerformance thisPhysicalPerformance;

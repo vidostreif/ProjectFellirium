@@ -87,6 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
   explode: 0
+  radiusOfExplosion: 0
 --- !u!212 &212000010124090896
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d03ebe8b0101243a6eb950130e5511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPause: 1
-  damage: 20
+  attackPause: 2
+  damage: 0
   attackDistance: 2
   target: {fileID: 0}
 --- !u!114 &114000010983634948
@@ -166,11 +166,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199decefc827ae445baabbf35894443a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
-  mp: 100
-  movementSpeed: 200
+  hp: 200
+  mp: 0
+  movementSpeed: 120
   physicalResistance: 10
-  magicResistance: 10
+  magicResistance: 0
 --- !u!114 &114000012297958392
 MonoBehaviour:
   m_ObjectHideFlags: 1

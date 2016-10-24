@@ -10,7 +10,7 @@ public class Magic : MonoBehaviour {
 
     public GameObject bulletPrefab; //префаб стрелы
     public int numberOfArrows = 20; //количество стрел
-    public float damageOfArrows = 30; // урон стрел
+    public int damageOfArrows = 30; // урон стрел
 
     public EnumAirMagic[] magicList; //список магии
     private EnumAirMagic currentMagic = 0;//выбранная магия

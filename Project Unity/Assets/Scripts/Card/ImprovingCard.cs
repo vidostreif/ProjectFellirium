@@ -13,6 +13,31 @@ public class ImprovingCard : MonoBehaviour {
 
     private List<Component> thisComponents;//все компоненты карты
 
+    //процедура активации карты
+    public void Activate()
+    {
+        DeleteOnExceptionsList();//подготовка массива компонентов
+
+        CommanderAI commander = GetComponent<Team>().commander;//командир карты
+
+        //берем все объекты с компонентом Team
+        Team[] findeObjects = FindObjectsOfType(typeof(Team)) as Team[];
+        foreach (Team findeObject in findeObjects)//для всех найденых объектов
+        {
+            if (findeObject.commander == commander)//если объект под нашим командованием
+            {
+                Card findeObjectCardComponent = findeObject.GetComponent<Card>();
+
+                if (findeObjectCardComponent == null)//убеждаемся, что это не карта
+                {
+                    //передаем его в следующую процедуру для улучшения
+                    ToImprove(findeObject.gameObject);
+                }
+                
+            }
+        }
+    }
+
     //проверяем что бы переданный объет был в списке объектов для которых применяет улучшение эта карта
     public void ToImprove(GameObject transferredObject)
     {
@@ -41,11 +66,10 @@ public class ImprovingCard : MonoBehaviour {
             SearchMatchingComponentsToUpdate(transferredObject);
         }
     }
+
     //поиск совпадающих компонентов для обновления
     private void SearchMatchingComponentsToUpdate(GameObject transferredObject) {
-
-        DeleteOnExceptionsList();
-
+        
         Component[] objectComponents = transferredObject.GetComponents<Component>();
         foreach (var thisComponent in thisComponents) //для каждого объекта в массиве
         {
@@ -58,6 +82,10 @@ public class ImprovingCard : MonoBehaviour {
                 if (thisType == objectType)//если типы компонентов совпадают
                 {
                     UpdateParameters(objectComponent, thisComponent);//обновляем параметры объекта
+
+                    //создаем эфект улучшения
+                    SpecialEffectsHelper.Instance.ImprovingEffect(transferredObject.transform.position);
+
                     break;//если нашли текущий компонент, то прерываем для поиска следующего
                 }
             }
@@ -67,7 +95,7 @@ public class ImprovingCard : MonoBehaviour {
     private void UpdateParameters(Component objectComponent, Component thisComponent)
     {
         Type program = thisComponent.GetType();
-        BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+        BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
         FieldInfo[] fields = program.GetFields(flags);
 
         for (int i = 0; i < fields.Length; i++)//перебор всех переменных

@@ -6,11 +6,10 @@ public class Card : MonoBehaviour {
     public CommanderAI commander { get; private set; }
     public EnumCard type;
 
-    //private Component dopComponent;
-
     private Transform thisTransform;
     private Vector3 newPosition;
     private Vector3 newScale;
+    private bool unresolvedCard = true;//признак не разыгранности карты
 
     // Use this for initialization
     void Start () {
@@ -85,14 +84,19 @@ public class Card : MonoBehaviour {
 
     public void MouseDown()
     {
-        commander.PlayCard(this);
+        if (unresolvedCard)// если эта карта не разыгранна
+        {
+            commander.PlayCard(this);
+            unresolvedCard = false; //помечаем карту как разыгранная
+        }        
     }
 
     public void Activate()
     {
         if (type == EnumCard.ImprovingCard)
         {
-            
+            ImprovingCard dopComponent = GetComponent<ImprovingCard>();
+            dopComponent.Activate();
         }
         else if (type == EnumCard.AddWarCard)
         {

@@ -3,10 +3,10 @@ using System.Collections;
 
 public class LongRangeWeapon : MonoBehaviour {
     [Header("Редактирование атрибутов:")]
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float attackPause;
-    [SerializeField] private float damage;
-    [SerializeField] private float attackDistance;
+    public GameObject bulletPrefab;
+    public float attackPause;
+    public int damage;
+    public float attackDistance;
 
     private Transform thisTransform;
     private PhysicalPerformance thisPhysicalPerformance;

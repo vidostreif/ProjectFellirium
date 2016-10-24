@@ -154,7 +154,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
     type: 2}
   attackPause: 2
-  damage: 15
+  damage: 25
   attackDistance: 15
   target: {fileID: 0}
 --- !u!114 &114000010410120090
@@ -181,10 +181,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
-  mp: 100
-  movementSpeed: 250
-  physicalResistance: 10
-  magicResistance: 10
+  mp: 0
+  movementSpeed: 140
+  physicalResistance: 5
+  magicResistance: 0
 --- !u!114 &114000012297958392
 MonoBehaviour:
   m_ObjectHideFlags: 1

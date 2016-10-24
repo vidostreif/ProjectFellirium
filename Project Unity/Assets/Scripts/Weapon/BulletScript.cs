@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class BulletScript : MonoBehaviour {
 
     public CommanderAI enemy;
-    public float Damage { private get; set; }
+    public int Damage { private get; set; }
     public bool explode = false; // взрываться
-    public int radiusOfExplosion = 3; //радиус взрыва
+    public float radiusOfExplosion = 3; //радиус взрыва
 
     private float timeLive = 8; //время жизни
     private float timedeath; //что бы патрон не летел вечно, мы ограничим время его жизни

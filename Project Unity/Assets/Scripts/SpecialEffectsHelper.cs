@@ -9,6 +9,7 @@ public class SpecialEffectsHelper : MonoBehaviour
 
     public ParticleSystem smokeEffect;
     public ParticleSystem fireEffect;
+    public ParticleSystem improvingEffect;
 
     void Awake()
     {
@@ -33,13 +34,21 @@ public class SpecialEffectsHelper : MonoBehaviour
         instantiate(fireEffect, position);
     }
 
+    // Создать эффект улучшения
+    public void ImprovingEffect(Vector3 position)
+    {
+        // Дым над водой
+        instantiate(improvingEffect, position);
+
+    }
+
     // Создание экземпляра системы частиц из префаба
     private ParticleSystem instantiate(ParticleSystem prefab, Vector3 position)
     {
         ParticleSystem newParticleSystem = Instantiate(
           prefab,
           position,
-          Quaternion.identity
+          prefab.transform.rotation
         ) as ParticleSystem;
 
         // Убедитесь, что это будет уничтожено

@@ -5,25 +5,18 @@ using System.Linq;
 
 public class PhysicalPerformance : MonoBehaviour {
     [Header("Редактирование атрибутов:")]
-    [SerializeField] private float hp;
-    [SerializeField] private float mp;
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private float physicalResistance;
-    [SerializeField] private float magicResistance;
-    //[SerializeField] private float attackDistance;//область зрения
+    public int hp;
+    public int mp;
+    public int movementSpeed;
+    public int physicalResistance;
+    public int magicResistance;
 
-    //private MobAI thisMobAI;
     private SpriteRenderer thisSpriteRenderer;
     private Rigidbody2D thisRigidbody2D;
 
     public CommanderAI commander { get; private set; }
     public bool isLive { get; private set; }
 
-    //public float GetAttackDistance()
-    //{
-    //    return attackDistance;
-    //}
-    // Use this for initialization
     void Start ()
     {
         Team thisMobTeam = GetComponent<Team>();
@@ -41,7 +34,7 @@ public class PhysicalPerformance : MonoBehaviour {
         isLive = true;
     }
 
-    public void SetPhysicalDamage(float damage)
+    public void SetPhysicalDamage(int damage)
     {
         if (isLive)
         {

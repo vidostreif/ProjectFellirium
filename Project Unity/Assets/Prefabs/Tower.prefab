@@ -185,11 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4de2466ecbeb4747b27f1882ee77d5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
+  bulletPrefab: {fileID: 1000012068142224, guid: ea73a5d992d0581499cdbea3fbc411cd,
     type: 2}
   attackPause: 0.2
-  damage: 15
-  attackDistance: 0
+  damage: 50
+  attackDistance: 25
   target: {fileID: 0}
 --- !u!114 &114000014210417198
 MonoBehaviour:
@@ -205,7 +205,7 @@ MonoBehaviour:
   hp: 1000
   mp: 0
   movementSpeed: 0
-  physicalResistance: 0
+  physicalResistance: 20
   magicResistance: 0
 --- !u!212 &212000011061154134
 SpriteRenderer:

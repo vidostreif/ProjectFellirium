@@ -99,13 +99,15 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010925225002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75d03ebe8b0101243a6eb950130e5511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackPause: 0
   damage: 20
+  attackDistance: 0
+  target: {fileID: 0}
 --- !u!114 &114000011624745852
 MonoBehaviour:
   m_ObjectHideFlags: 1
