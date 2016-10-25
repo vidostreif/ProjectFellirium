@@ -12,7 +12,8 @@ public class MeleeWeapon : MonoBehaviour {
     private float timeLastAttack = 0;
     private float timeLastSearch = 0;//время последнего вызова функции поиска цели
 
-    public CommanderAI commander { get; private set; }
+    //public CommanderAI commander { get; private set; }
+    public Team team { get; private set; }//наша команда
     public GameObject target;
 
     // Use this for initialization
@@ -20,7 +21,8 @@ public class MeleeWeapon : MonoBehaviour {
     {
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
         thisTransform = GetComponent<Transform>();
-        commander = GetComponent<Team>().commander;
+        //commander = GetComponent<Team>().commander;
+        team = GetComponent<Team>();
 
         //добовляем небольшой рандов в дистанцию атаки моба для красоты
         attackDistance = Random.Range(attackDistance * 0.99f, attackDistance * 1.01f);
@@ -33,7 +35,7 @@ public class MeleeWeapon : MonoBehaviour {
             //ищем цель 10 раз в секунду
             if (Time.time > timeLastSearch + 0.2f)
             {
-                target = MainScript.TargetSelection(transform, commander, attackDistance);
+                target = MainScript.TargetSelection(thisTransform, team.commander, attackDistance);
                 timeLastSearch = Time.time;
             }
 

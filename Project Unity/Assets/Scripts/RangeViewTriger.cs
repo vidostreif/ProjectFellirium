@@ -5,12 +5,13 @@ public class RangeViewTriger : MonoBehaviour {
 
     public bool onTriggerStay = false;
     public Transform target;
-    public CommanderAI commander { get; private set; }
+    public Team team { get; private set; }//наша команда
 
     // Use this for initialization
     void Start () {
         //передаем ссылку на командира
-        commander = transform.parent.GetComponent<Team>().commander;
+        //commander = transform.parent.GetComponent<Team>().commander;
+        team = GetComponent<Team>();
     }
 	
 
@@ -21,7 +22,7 @@ public class RangeViewTriger : MonoBehaviour {
         if (otherPhysicalPerformance != null)
         {
             //эсли это враг и он жив
-            if (commander.enemy == otherPhysicalPerformance.commander && otherPhysicalPerformance.isLive)
+            if (team.commander.enemy == otherPhysicalPerformance.team.commander && otherPhysicalPerformance.isLive)
             {           
                 target = otherPhysicalPerformance.transform;
                 onTriggerStay = true;

@@ -11,6 +11,7 @@ TagManager:
   - GameController
   - Tower
   - Ground
+  - Hand
   layers:
   - Default
   - TransparentFX

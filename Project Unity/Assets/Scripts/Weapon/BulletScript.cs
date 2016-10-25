@@ -62,7 +62,7 @@ public class BulletScript : MonoBehaviour {
                 {
                     PhysicalPerformance currentObjectPhysicalPerformance = currentObject.GetComponent<PhysicalPerformance>();
                         //эсли это враг и он жив
-                        if (enemy == currentObjectPhysicalPerformance.commander)
+                        if (enemy == currentObjectPhysicalPerformance.team.commander)
                         {
                         //то наносим дамаг
                         currentObjectPhysicalPerformance.SetPhysicalDamage(Damage);
@@ -77,7 +77,7 @@ public class BulletScript : MonoBehaviour {
                 if (otherPhysicalPerformance)//Если physicalPerformance есть
                 {
                     //эсли это враг и он жив
-                    if (enemy == otherPhysicalPerformance.commander && otherPhysicalPerformance.isLive)
+                    if (enemy == otherPhysicalPerformance.team.commander && otherPhysicalPerformance.isLive)
                     {
                         //то наносим дамаг
                         otherPhysicalPerformance.SetPhysicalDamage(Damage);

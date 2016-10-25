@@ -74,7 +74,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1000012068142224, guid: 9625aa8b047f1d749bdad5dbcce61408,
     type: 2}
   numberOfArrows: 68
-  damageOfArrows: 27.34
+  damageFromArrow: 30
+  damageFromExplosion: 150
+  radiusOfExplosion: 10
 --- !u!114 &114000010771377140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -157,7 +159,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_Sprite: {fileID: 21300000, guid: 97faf2a8e1cbd9243876c499df93f0eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

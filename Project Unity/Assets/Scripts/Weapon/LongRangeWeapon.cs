@@ -13,7 +13,8 @@ public class LongRangeWeapon : MonoBehaviour {
     private float timeLastAttack = 0;//время последней атаки
     private float timeLastSearch = 0;//время последнего вызова функции поиска цели
 
-    public CommanderAI commander { get; private set; }
+    //public CommanderAI commander { get; private set; }
+    public Team team { get; private set; }//наша команда
     public GameObject target;
 
     // Use this for initialization
@@ -21,7 +22,8 @@ public class LongRangeWeapon : MonoBehaviour {
     {
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
         thisTransform = GetComponent<Transform>();
-        commander = GetComponent<Team>().commander;
+        //commander = GetComponent<Team>().commander;
+        team = GetComponent<Team>();
 
         //добовляем небольшой рандов в дистанцию атаки моба для красоты
         attackDistance = Random.Range(attackDistance * 0.99f, attackDistance * 1.01f);
@@ -34,7 +36,7 @@ public class LongRangeWeapon : MonoBehaviour {
             //ищем цель 10 раз в секунду
             if (Time.time > timeLastSearch + 0.2f)
             {
-                target = MainScript.TargetSelection(transform, commander, attackDistance, 2);
+                target = MainScript.TargetSelection(transform, team.commander, attackDistance, 2);
                 timeLastSearch = Time.time;
             }
 
@@ -95,7 +97,7 @@ public class LongRangeWeapon : MonoBehaviour {
             vShotDirection = new Vector3(vShotDirection.x, vShotDirection.y + (agleT / 90) - targetSpeed, vShotDirection.z);
             
             //указываем кто враг
-            newBulletBulletScript.enemy = commander.enemy;
+            newBulletBulletScript.enemy = team.commander.enemy;
             //указываем урон
             newBulletBulletScript.Damage = damage;
             //корректируем позицию

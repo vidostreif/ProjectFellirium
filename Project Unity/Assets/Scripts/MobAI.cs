@@ -13,8 +13,9 @@ public class MobAI : MonoBehaviour {
     private bool canAct = true; //может действовать
     private Transform groundCheck;          // тригер определяющий землю
     private bool grounded = false;          // мы на земле?
+    public Team team { get; private set; }//наша команда
 
-    public CommanderAI commander { get; private set; }
+    //public CommanderAI commander { get; private set; }
 
     void Awake()
     {
@@ -27,7 +28,8 @@ public class MobAI : MonoBehaviour {
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
         thisLongRangeWeapon = GetComponent<LongRangeWeapon>();
         thisMeleeWeapon = GetComponent<MeleeWeapon>();
-        commander = GetComponent<Team>().commander;
+        //commander = GetComponent<Team>().commander;
+        team = GetComponent<Team>();
     }
 
     // Update is called once per frame
@@ -61,7 +63,7 @@ public class MobAI : MonoBehaviour {
             else//иначе движемся к вражеской башне
             {
                 //получаем вектор идущий от моба к вражеской башне
-                Vector3 directionOnTarget = commander.GetEnemyTowerTransform().position - transform.position;
+                Vector3 directionOnTarget = team.commander.GetEnemyTowerTransform().position - transform.position;
                 if (directionOnTarget.magnitude > 2)//если длина этого вектора больше двух
                 {
                     thisPhysicalPerformance.Move(directionOnTarget);

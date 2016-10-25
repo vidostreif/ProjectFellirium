@@ -116,7 +116,7 @@ public class MainScript : MonoBehaviour {
                 //{
                     //float MobDistance = Vector3.Distance(mob.transform.position, transformCalling.position); //Меряем дистанцию от цели до пушки, записываем её в переменную
 
-                    if (target.commander == commander.enemy && target.isLive)
+                    if (target.team.commander == commander.enemy && target.isLive)
                     {
                         closestMobDistance = distance; //дистанция до ближайшей цели
                         nearestmob = target.gameObject;//устанавливаем его как ближайшая

@@ -13,24 +13,20 @@ public class PhysicalPerformance : MonoBehaviour {
 
     private SpriteRenderer thisSpriteRenderer;
     private Rigidbody2D thisRigidbody2D;
+    public Team team { get; private set; }//наша команда
 
-    public CommanderAI commander { get; private set; }
+    //public CommanderAI commander { get; private set; }
     public bool isLive { get; private set; }
 
-    void Start ()
+    void Awake()
     {
-        Team thisMobTeam = GetComponent<Team>();
-
-        if (thisMobTeam)
-        {
-            commander = thisMobTeam.commander;
-        }
+        //Team thisMobTeam = GetComponent<Team>();
+        team = GetComponent<Team>();
 
         thisSpriteRenderer = GetComponent<SpriteRenderer>();
         //ссылка на физику
         thisRigidbody2D = GetComponent<Rigidbody2D>();
-
-
+        
         isLive = true;
     }
 

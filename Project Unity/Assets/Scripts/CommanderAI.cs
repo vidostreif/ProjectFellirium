@@ -18,10 +18,9 @@ public class CommanderAI : MonoBehaviour {
     public CommanderAI friend;//командир друг
 
     public List<Card> CardsInDeck; //массив карты в колоде
-    public List<Card> CardsInHand; //массив карты в руке
     public List<Card> ActionsCards; //активные карты
-    
 
+    private Hand hand; //рука с картами
     private float timeLastCreateMob;
     private float timeLastCreateMob2;
     private Transform thisTransform;
@@ -29,6 +28,35 @@ public class CommanderAI : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        //находим руку с картами
+        Transform handTransform = transform.FindChild("Hand");
+        hand = handTransform.GetComponent<Hand>();
+        if (!hand)//если не нашли руку
+        {
+            Debug.LogError("Командир " + this + " потерял руку! Добавьте ему руку в качестве дочернего объекта");
+        }
+        else
+        {
+            //назначим себя командиром руки
+            handTransform.GetComponent<Team>().commander = this;
+            //инициализация руки
+            handTransform.GetComponent<Hand>().Initialization();
+
+            if (managePlayer)//если командиром управляет игрок, то прикрепим руку камере
+            {
+                Transform mainCameraTransform = Camera.main.transform;
+
+                float height = Camera.main.orthographicSize * 2;
+                Bounds bounds = new Bounds(Vector3.zero, new Vector3(height * Camera.main.aspect, height, 0));
+                float minCamY = bounds.min.y;
+
+                hand.transform.position = new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y + minCamY, mainCameraTransform.position.z + 1);
+                hand.transform.parent = Camera.main.transform;
+            }
+        }
+
+
+
         thisTransform = GetComponent<Transform>();
     }
 
@@ -94,8 +122,6 @@ public class CommanderAI : MonoBehaviour {
     {
         return enemy.tower.transform;
     }
-    
-
 
     //работа с картами
     //разыграть карту
@@ -108,8 +134,15 @@ public class CommanderAI : MonoBehaviour {
         //активировать карту
         card.Activate();
 
+        ////убираем карту из руки
+        //DeleteCardFromHand(card);
+
         //убираем карту из руки
-        DeleteCardFromHand(card);
+        hand.RemoveCard(card);
+        //назначаем нового родителя
+        card.transform.parent = thisTransform;
+        //определяем новое место и размер отображения карты
+        MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
     }
 
     //добавляем карту в список активных карт
@@ -118,16 +151,16 @@ public class CommanderAI : MonoBehaviour {
         ActionsCards.Add(card);
     }
 
-    //убираем карту из руки
-    public void DeleteCardFromHand(Card card)
-    {
-        //убираем карту из руки
-        CardsInHand.Remove(card);
+    ////убираем карту из руки
+    //public void DeleteCardFromHand(Card card)
+    //{
+    //    //убираем карту из руки
+    //    hand.RemoveCard(card);
+    //    //назначаем нового родителя
+    //    card.transform.parent = thisTransform;
+    //    //определяем новое место и размер отображения карты
+    //    MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
+    //}
 
-        //определяем новое место и размер отображения карты
-        //card.MovingToANewPlace(thisTransform.position, 0.5f);
-
-        MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
-    }
 
 }

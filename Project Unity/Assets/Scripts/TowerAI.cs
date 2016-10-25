@@ -7,13 +7,13 @@ public class TowerAI : MonoBehaviour {
     //public float minAttackDistance = 3;
     //public float maxAttackDistance = 10;
 
-    private LongRangeWeapon thisLongRangeWeapon;
+    //private LongRangeWeapon thisLongRangeWeapon;
     private PhysicalPerformance thisPhysicalPerformance;
 
     // Use this for initialization
     void Start () {
         commander = GetComponent<Team>().commander;
-        thisLongRangeWeapon = GetComponent<LongRangeWeapon>();
+        ////thisLongRangeWeapon = GetComponent<LongRangeWeapon>();
         thisPhysicalPerformance = GetComponent<PhysicalPerformance>();
 
         ////и ищем своего командира

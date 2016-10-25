@@ -103,7 +103,7 @@ public class MagicCard : MonoBehaviour {
             PhysicalPerformance currentObjectPhysicalPerformance = currentObject.GetComponent<PhysicalPerformance>();
             if (currentObjectRigidbody2D && currentObjectPhysicalPerformance)//если есть физика и скрип физ параметров
             {
-                if (currentObjectPhysicalPerformance.commander.enemy == commander)//если объект против нас
+                if (currentObjectPhysicalPerformance.team.commander.enemy == commander)//если объект против нас
                 {
                     //воздействуем на объект
                     currentObjectPhysicalPerformance.SetPhysicalDamage(damage);//наносим урон
