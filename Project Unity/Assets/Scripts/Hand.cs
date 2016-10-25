@@ -28,6 +28,10 @@ public class Hand : MonoBehaviour {
             Team newCardTeam = newCard.GetComponent<Team>();
             //указываем командира карты
             newCardTeam.commander = team.commander;
+
+            //Card newCardCard = newCard.GetComponent<Card>();
+            ////указываем стартовую позицию относительно руки
+            //newCardCard.startLocalPosition = 
         }
     }
 	

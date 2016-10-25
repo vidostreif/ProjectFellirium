@@ -12,20 +12,18 @@ public class MainScript : MonoBehaviour {
     private struct StructGivenForMove// структура данных для медленного перемещения объекта на новую позицию
     {
         public Transform transform;//трансформ перемещаемго объекта
-        public Vector3 startPosition; //стартовая позиция
-        public Vector3 startScale;
         public Vector3 newPosition; //позиция назначения
         public Vector3 newScale;
         public float moveSpeed; //скорость перемещения
+        public bool inLocalCoordinates; //в локальных координатах
 
-        public StructGivenForMove(Transform transform, Vector3 newPosition, Vector3 newScale, float moveSpeed) 
+        public StructGivenForMove(Transform transform, Vector3 newPosition, Vector3 newScale, float moveSpeed, bool inLocalCoordinates) 
         {
             this.transform = transform;
-            this.startPosition = transform.position;
-            this.startScale = transform.localScale;
             this.newPosition = newPosition;
             this.newScale = newScale;
             this.moveSpeed = moveSpeed;
+            this.inLocalCoordinates = inLocalCoordinates;
         }
     }
     private List<StructGivenForMove> arrayForMove;//список структур данных для медленного перемещения на новую позицию
@@ -153,8 +151,7 @@ public class MainScript : MonoBehaviour {
 
         return objectsToInteract.ToArray();
     }
-
-    
+        
     public static GameObject[] FindObjectsInRadiusWithComponent(Vector2 position, float Radius, Type component)//поиск объектов по тегу в радиусе
     {
         List<GameObject> objectsToInteract = new List<GameObject>();//список найденных объектов
@@ -176,14 +173,45 @@ public class MainScript : MonoBehaviour {
         return objectsToInteract.ToArray();
     }
 
-    public void SlowlyMoveToNewPosition(Transform gameObjectTransform, Vector3 newPosition, float newScale, float speed = 1)//добавление новых данных в массив для медленного перемещения
+    public void SlowlyMoveToNewPosition(Transform gameObjectTransform, Vector3 newPosition, float newScale = 1, float speed = 1)//добавление новых данных в массив для медленного перемещения
     {
+
+        //проверяем на наличие переданного трансформа объекта в массиве, так как при повторном добавлении объект будет вести себя не атак как нужно
+        CheckForArrayForMoveAndRemove(gameObjectTransform);
+
         //переводим новый размер из числа в вектор
         Vector3 vNewScale = new Vector3(gameObjectTransform.localScale.x * newScale, gameObjectTransform.localScale.y * newScale, gameObjectTransform.localScale.z * newScale);
         //создаем новую структуру
-        StructGivenForMove newStructGivenForMove = new StructGivenForMove(gameObjectTransform, newPosition, vNewScale, speed);
+        StructGivenForMove newStructGivenForMove = new StructGivenForMove(gameObjectTransform, newPosition, vNewScale, speed, false);
         //добавляем в массив
         arrayForMove.Add(newStructGivenForMove);
+    }
+
+    public void SlowlyMoveToNewLocalPosition(Transform gameObjectTransform, Vector3 newLocalPosition, float newScale = 1, float speed = 1)//добавление новых данных в массив для медленного перемещения
+    {
+        //проверяем на наличие переданного трансформа объекта в массиве, так как при повторном добавлении объект будет вести себя не атак как нужно
+        CheckForArrayForMoveAndRemove(gameObjectTransform);
+
+        //переводим новый размер из числа в вектор
+        Vector3 vNewScale = new Vector3(gameObjectTransform.localScale.x * newScale, gameObjectTransform.localScale.y * newScale, gameObjectTransform.localScale.z * newScale);
+        //создаем новую структуру
+        StructGivenForMove newStructGivenForMove = new StructGivenForMove(gameObjectTransform, newLocalPosition, vNewScale, speed, true);
+        //добавляем в массив
+        arrayForMove.Add(newStructGivenForMove);
+    }
+
+    private void CheckForArrayForMoveAndRemove(Transform transform)
+    {
+        //проверяем на наличие переданного трансформа объекта в массиве
+        foreach (StructGivenForMove structGivenForMove in arrayForMove)
+        {
+            if (structGivenForMove.transform == transform)//если есть совпадение, то удаляем этот элемент из массива
+            {
+                //удаляем из массива
+                arrayForMove.Remove(structGivenForMove);
+                break;
+            }
+        }
     }
 
     private void processingArrayForMove()//процедура обработки объектов для медленного перемещения и скалирования
@@ -202,8 +230,17 @@ public class MainScript : MonoBehaviour {
             else// иначе передвигаем и скалируем его
             {
                 //определяем новое место и размер объекта
-                structGivenForMove.transform.position = Vector3.Lerp(structGivenForMove.transform.position, structGivenForMove.newPosition, Time.deltaTime * structGivenForMove.moveSpeed);
+                if (structGivenForMove.inLocalCoordinates)//если в локальных координатах
+                {
+                    structGivenForMove.transform.localPosition = Vector3.Lerp(structGivenForMove.transform.localPosition, structGivenForMove.newPosition, Time.deltaTime * structGivenForMove.moveSpeed);
+                }
+                else
+                {
+                    structGivenForMove.transform.position = Vector3.Lerp(structGivenForMove.transform.position, structGivenForMove.newPosition, Time.deltaTime * structGivenForMove.moveSpeed);
+                }
+
                 structGivenForMove.transform.localScale = Vector3.Lerp(structGivenForMove.transform.localScale, structGivenForMove.newScale, Time.deltaTime * structGivenForMove.moveSpeed);
+
             }
         }
             

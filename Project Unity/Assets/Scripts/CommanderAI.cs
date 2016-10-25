@@ -37,11 +37,7 @@ public class CommanderAI : MonoBehaviour {
         }
         else
         {
-            //назначим себя командиром руки
-            handTransform.GetComponent<Team>().commander = this;
-            //инициализация руки
-            handTransform.GetComponent<Hand>().Initialization();
-
+            
             if (managePlayer)//если командиром управляет игрок, то прикрепим руку камере
             {
                 Transform mainCameraTransform = Camera.main.transform;
@@ -50,9 +46,14 @@ public class CommanderAI : MonoBehaviour {
                 Bounds bounds = new Bounds(Vector3.zero, new Vector3(height * Camera.main.aspect, height, 0));
                 float minCamY = bounds.min.y;
 
-                hand.transform.position = new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y + minCamY, mainCameraTransform.position.z + 1);
+                hand.transform.position = new Vector3(mainCameraTransform.position.x, mainCameraTransform.position.y + minCamY + 2, mainCameraTransform.position.z + 1);
                 hand.transform.parent = Camera.main.transform;
             }
+
+            //назначим себя командиром руки
+            handTransform.GetComponent<Team>().commander = this;
+            //инициализация руки
+            handTransform.GetComponent<Hand>().Initialization();
         }
 
 

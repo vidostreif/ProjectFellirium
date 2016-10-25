@@ -6,23 +6,42 @@ public class Card : MonoBehaviour {
     //public CommanderAI commander { get; private set; }
 
     public EnumCard type;
+    public Team team { get; private set; }//наша команда
+    public Vector3 startLocalPosition;//стартовая позиция карты относительно предка
 
     private bool unresolvedCard = true;//признак не разыгранности карты
-    public Team team { get; private set; }//наша команда
+    
 
 
     void Awake()
     {
         team = GetComponent<Team>();
+        startLocalPosition = transform.localPosition;
     }
 
-    public void MouseDown()
+    public void PointerClick()
     {
         if (unresolvedCard && team.commander)// если эта карта не разыгранна и есть командир
         {
             team.commander.PlayCard(this);
             unresolvedCard = false; //помечаем карту как разыгранная
         }        
+    }
+
+    public void PointerEnter()
+    {
+        if (unresolvedCard)// если эта карта не разыгранна
+        {
+            MainScript.Instance.SlowlyMoveToNewLocalPosition(transform, new Vector3(transform.localPosition.x, transform.localPosition.y + 2, transform.localPosition.z), 1, 2);
+        }
+    }
+
+    public void PointerExit()
+    {
+        if (unresolvedCard)// если эта карта не разыгранна
+        {
+            MainScript.Instance.SlowlyMoveToNewLocalPosition(transform, startLocalPosition, 1, 2);
+        }
     }
 
     public void Activate()
