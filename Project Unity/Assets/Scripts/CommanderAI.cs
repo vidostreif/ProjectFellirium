@@ -101,15 +101,6 @@ public class CommanderAI : MonoBehaviour {
     //разыграть карту
     public void PlayCard(Card card)
     {
-        //if (card.type == EnumCard.ImprovingCard)
-        //{
-        //    //добавляем карту в список активных
-        //    AddCardInActionsCards(card);
-        //}
-        //else if (card.type == EnumCard.AddWarCard)
-        //{
-
-        //}
 
         //добавляем карту в список активных
         AddCardInActionsCards(card);
@@ -134,7 +125,9 @@ public class CommanderAI : MonoBehaviour {
         CardsInHand.Remove(card);
 
         //определяем новое место и размер отображения карты
-        card.MovingToANewPlace(thisTransform.position, 0.5f);
+        //card.MovingToANewPlace(thisTransform.position, 0.5f);
+
+        MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
     }
 
 }

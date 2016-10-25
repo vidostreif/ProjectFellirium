@@ -6,9 +6,9 @@ public class Card : MonoBehaviour {
     public CommanderAI commander { get; private set; }
     public EnumCard type;
 
-    private Transform thisTransform;
-    private Vector3 newPosition;
-    private Vector3 newScale;
+    //private Transform thisTransform;
+    //private Vector3 newPosition;
+    //private Vector3 newScale;
     private bool unresolvedCard = true;//признак не разыгранности карты
 
     // Use this for initialization
@@ -21,36 +21,9 @@ public class Card : MonoBehaviour {
             Debug.Log("У карты " + gameObject.name + " не определен командир!");
         }
 
-        thisTransform = GetComponent<Transform>();
-        newPosition = thisTransform.position;
-        newScale = thisTransform.localScale;
-
-
-        ////находим коммандира который указан GameController
-        //GameObject[] gameControllers = GameObject.FindGameObjectsWithTag("GameController");
-
-        //if (gameControllers.Length == 0)//если нет ни одного контроллера
-        //{
-        //    Debug.Log("На сцене нет ни одного GameController");
-        //}
-        //else if (gameControllers.Length > 1)// если больше одного контроллера
-        //{
-        //    Debug.Log("На сцене больше одного GameController");
-        //}
-        //else if (gameControllers.Length == 1)
-        //{
-        //    MainScript gameControllerMainScript = gameControllers[0].GetComponent<MainScript>();
-
-        //    if (gameControllerMainScript)
-        //    {
-        //        commander = gameControllerMainScript.playerCommander;
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("К GameController не прикреплен MainScript");
-        //    }
-
-        //}
+        //thisTransform = GetComponent<Transform>();
+        //newPosition = thisTransform.position;
+        //newScale = thisTransform.localScale;
 
         //определяем тип карты при создании
         if (GetComponent<ImprovingCard>())
@@ -76,15 +49,15 @@ public class Card : MonoBehaviour {
 
     void Update()
     {
-        //определяем новое место и размер отображения карты
-        thisTransform.position = Vector3.Lerp(thisTransform.position ,newPosition, Time.deltaTime * 1f);
-        thisTransform.localScale = Vector3.Lerp(thisTransform.localScale, newScale, Time.deltaTime * 1f);
+        ////определяем новое место и размер отображения карты
+        //thisTransform.position = Vector3.Lerp(thisTransform.position ,newPosition, Time.deltaTime * 1f);
+        //thisTransform.localScale = Vector3.Lerp(thisTransform.localScale, newScale, Time.deltaTime * 1f);
     }
 
 
     public void MouseDown()
     {
-        if (unresolvedCard)// если эта карта не разыгранна
+        if (unresolvedCard && commander)// если эта карта не разыгранна и есть командир
         {
             commander.PlayCard(this);
             unresolvedCard = false; //помечаем карту как разыгранная
@@ -110,10 +83,10 @@ public class Card : MonoBehaviour {
         }
     }
 
-    //определяем новые место и размер карты
-    public void MovingToANewPlace(Vector3 position, float Scale = 1)
-    {
-        newPosition = position;
-        newScale = new Vector3(thisTransform.localScale.x * Scale, thisTransform.localScale.y * Scale, thisTransform.localScale.z * Scale);
-    }
+    ////определяем новые место и размер карты
+    //public void MovingToANewPlace(Vector3 position, float Scale = 1)
+    //{
+    //    newPosition = position;
+    //    newScale = new Vector3(thisTransform.localScale.x * Scale, thisTransform.localScale.y * Scale, thisTransform.localScale.z * Scale);
+    //}
 }

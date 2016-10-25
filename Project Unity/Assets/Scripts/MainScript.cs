@@ -3,11 +3,49 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class MainScript : MonoBehaviour {
+    
+    public static MainScript Instance; // Синглтон
     public CommanderAI playerCommander { get; private set; }
-
+    
     private GameObject[] commanders;
+    
+    private struct StructGivenForMove// структура данных для медленного перемещения объекта на новую позицию
+    {
+        public Transform transform;//трансформ перемещаемго объекта
+        public Vector3 startPosition; //стартовая позиция
+        public Vector3 startScale;
+        public Vector3 newPosition; //позиция назначения
+        public Vector3 newScale;
+        public float moveSpeed; //скорость перемещения
+
+        public StructGivenForMove(Transform transform, Vector3 newPosition, Vector3 newScale, float moveSpeed) 
+        {
+            this.transform = transform;
+            this.startPosition = transform.position;
+            this.startScale = transform.localScale;
+            this.newPosition = newPosition;
+            this.newScale = newScale;
+            this.moveSpeed = moveSpeed;
+        }
+    }
+    private List<StructGivenForMove> arrayForMove;//список структур данных для медленного перемещения на новую позицию
+
+    void Awake()
+    {
+        // регистрация синглтона
+        if (Instance != null)
+        {
+            Debug.LogError("Несколько экземпляров MainScript!");
+        }
+
+        Instance = this;
+    }
+
     // Use this for initialization
     void Start () {
+
+        //инициализируем список
+        arrayForMove = new List<StructGivenForMove>();
 
         //находим коммандира которым должен управлять игрок
         commanders = GameObject.FindGameObjectsWithTag("Commander");
@@ -34,7 +72,7 @@ public class MainScript : MonoBehaviour {
 // Update is called once per frame
     void Update () {
 
-
+        processingArrayForMove();//процедура обработки объектов для медленного перемещения и скалирования
     }
 
     internal static void magicChoice(int magic)
@@ -136,5 +174,38 @@ public class MainScript : MonoBehaviour {
         }
 
         return objectsToInteract.ToArray();
+    }
+
+    public void SlowlyMoveToNewPosition(Transform gameObjectTransform, Vector3 newPosition, float newScale, float speed = 1)//добавление новых данных в массив для медленного перемещения
+    {
+        //переводим новый размер из числа в вектор
+        Vector3 vNewScale = new Vector3(gameObjectTransform.localScale.x * newScale, gameObjectTransform.localScale.y * newScale, gameObjectTransform.localScale.z * newScale);
+        //создаем новую структуру
+        StructGivenForMove newStructGivenForMove = new StructGivenForMove(gameObjectTransform, newPosition, vNewScale, speed);
+        //добавляем в массив
+        arrayForMove.Add(newStructGivenForMove);
+    }
+
+    private void processingArrayForMove()//процедура обработки объектов для медленного перемещения и скалирования
+    {
+        //foreach (StructGivenForMove structGivenForMove in arrayForMove) //для каждого объекта в массиве
+        for (int i = 0; i < arrayForMove.Count; i++)
+        {
+            StructGivenForMove structGivenForMove = arrayForMove[i];//берем из массива структуру для обработки
+
+            //если объект достиг назначенной позиции и размера, то удаляем его из массива для обработки
+            if (structGivenForMove.transform.position == structGivenForMove.newPosition && structGivenForMove.transform.localScale == structGivenForMove.newScale)
+            {
+                //удаляем из массива
+                arrayForMove.Remove(structGivenForMove);
+            }
+            else// иначе передвигаем и скалируем его
+            {
+                //определяем новое место и размер объекта
+                structGivenForMove.transform.position = Vector3.Lerp(structGivenForMove.transform.position, structGivenForMove.newPosition, Time.deltaTime * structGivenForMove.moveSpeed);
+                structGivenForMove.transform.localScale = Vector3.Lerp(structGivenForMove.transform.localScale, structGivenForMove.newScale, Time.deltaTime * structGivenForMove.moveSpeed);
+            }
+        }
+            
     }
 }
