@@ -37,14 +37,14 @@ public class MainScript : MonoBehaviour {
         }
 
         Instance = this;
+
+        //инициализируем список
+        arrayForMove = new List<StructGivenForMove>();
     }
 
     // Use this for initialization
     void Start () {
-
-        //инициализируем список
-        arrayForMove = new List<StructGivenForMove>();
-
+        
         //находим коммандира которым должен управлять игрок
         commanders = GameObject.FindGameObjectsWithTag("Commander");
         foreach (GameObject commader in commanders) //для каждого моба в массиве
