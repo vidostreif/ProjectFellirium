@@ -2332,7 +2332,8 @@ MonoBehaviour:
   - {fileID: 114000010771377140, guid: f430ba48eadfed94590a39c2f09a41a0, type: 2}
   - {fileID: 114000010771377140, guid: 6e1a48bc60c7a3349acac54c920ee072, type: 2}
   - {fileID: 114000010771377140, guid: 5f690f30335bb1343a97c8b419755926, type: 2}
-  length: 30
+  length: 20
+  cardWidth: 5
 --- !u!4 &1536440498
 Transform:
   m_ObjectHideFlags: 0
@@ -2661,7 +2662,8 @@ MonoBehaviour:
   - {fileID: 114000010771377140, guid: 6e1a48bc60c7a3349acac54c920ee072, type: 2}
   - {fileID: 114000010771377140, guid: 5f690f30335bb1343a97c8b419755926, type: 2}
   - {fileID: 114000010771377140, guid: 5f690f30335bb1343a97c8b419755926, type: 2}
-  length: 30
+  length: 20
+  cardWidth: 5
 --- !u!4 &1740962149
 Transform:
   m_ObjectHideFlags: 0
