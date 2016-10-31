@@ -11,6 +11,30 @@ public class ImprovingCard : MonoBehaviour {
     [Header("Компоненты - исключения:")]
     public Component[] exceptionsComponents; //компоненты исключения
 
+    //[System.Serializable]
+    public struct StructForImproving// структура данных для улучшения
+    {
+        public struct StructComponents
+        {
+            public string componentName;//название компонента
+            public string[] variablesNames;//Все переменные
+        }
+
+        public StructComponents[] components;//описание всех компонентов
+
+        public string[][] Parameters;
+        //public string[] componentsNames;//Все компоненты
+        //public string componentName;//компонент который улучшаем
+        public int indexComponent;
+        //public string[] variablesNames;//Все переменные
+        //public string variableName; //название переменной для улучшения
+        public int indexParameter; //индекс параметра
+        public int value; //значение улучшения
+ 
+    }
+    public StructForImproving[] arrayForImproving;//список структур данных для улучшения
+    public int sizeOfArray = 0;
+
     private List<Component> thisComponents;//все компоненты карты
 
     //процедура активации карты

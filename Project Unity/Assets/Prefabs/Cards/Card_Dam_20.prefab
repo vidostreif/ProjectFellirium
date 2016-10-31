@@ -78,9 +78,10 @@ MonoBehaviour:
   - {fileID: 212000011613176476}
   - {fileID: 61000012030682312}
   - {fileID: 114000011986003436}
-  - {fileID: 0}
+  - {fileID: 114000010771377140}
   - {fileID: 114000010631917322}
   - {fileID: 114000011624745852}
+  sizeOfArray: 1
 --- !u!114 &114000010771377140
 MonoBehaviour:
   m_ObjectHideFlags: 1
