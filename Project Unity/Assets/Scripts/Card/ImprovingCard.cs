@@ -8,12 +8,13 @@ using System.Collections.Generic;
 public class ImprovingCard : MonoBehaviour {
     [Header("Объекты к которым применяется карта:")]
     public GameObject[] authorizedObjects;//массив объектов к которым будут применяться улучения
-    [Header("Компоненты - исключения:")]
-    public Component[] exceptionsComponents; //компоненты исключения
+    //[Header("Компоненты - исключения:")]
+    //public Component[] exceptionsComponents; //компоненты исключения
 
-    //[System.Serializable]
+    [System.Serializable]
     public struct StructForImproving// структура данных для улучшения
     {
+        [System.Serializable]
         public struct StructComponents
         {
             public string componentName;//название компонента
@@ -22,25 +23,20 @@ public class ImprovingCard : MonoBehaviour {
 
         public StructComponents[] components;//описание всех компонентов
 
-        public string[][] Parameters;
-        //public string[] componentsNames;//Все компоненты
-        //public string componentName;//компонент который улучшаем
-        public int indexComponent;
-        //public string[] variablesNames;//Все переменные
-        //public string variableName; //название переменной для улучшения
+        public int indexComponent; //индекс компонента
         public int indexParameter; //индекс параметра
         public int value; //значение улучшения
  
     }
     public StructForImproving[] arrayForImproving;//список структур данных для улучшения
-    public int sizeOfArray = 0;
+    public int sizeOfArray;
 
-    private List<Component> thisComponents;//все компоненты карты
+    //private List<Component> thisComponents;//все компоненты карты
 
     //процедура активации карты
     public void Activate()
     {
-        DeleteOnExceptionsList();//подготовка массива компонентов
+        //DeleteOnExceptionsList();//подготовка массива компонентов
 
         CommanderAI commander = GetComponent<Team>().commander;//командир карты
 
@@ -95,17 +91,21 @@ public class ImprovingCard : MonoBehaviour {
     private void SearchMatchingComponentsToUpdate(GameObject transferredObject) {
         
         Component[] objectComponents = transferredObject.GetComponents<Component>();
-        foreach (var thisComponent in thisComponents) //для каждого объекта в массиве
+        foreach (var ForImproving in arrayForImproving) //для каждого объекта в массиве
         {
-            System.Type thisType = thisComponent.GetType();
+
+            string componentNameForImproving = ForImproving.components[ForImproving.indexComponent].componentName;//берем название компонента для обновления
+            string parametrNameForImproving = ForImproving.components[ForImproving.indexComponent].variablesNames[ForImproving.indexParameter];//берем название переменной для обновления
 
             foreach (var objectComponent in objectComponents) //для каждого объекта в массиве
             {
                 System.Type objectType = objectComponent.GetType();
 
-                if (thisType == objectType)//если типы компонентов совпадают
+                string objectComponentName = objectType.ToString();//название компонента объекта
+
+                if (componentNameForImproving == objectComponentName)//если типы компонентов совпадают
                 {
-                    UpdateParameters(objectComponent, thisComponent);//обновляем параметры объекта
+                    UpdateParameters(objectComponent, parametrNameForImproving, ForImproving.value);//обновляем параметры объекта
 
                     //создаем эфект улучшения
                     SpecialEffectsHelper.Instance.ImprovingEffect(transferredObject.transform.position);
@@ -116,39 +116,45 @@ public class ImprovingCard : MonoBehaviour {
         }
     }
 
-    private void UpdateParameters(Component objectComponent, Component thisComponent)
+    private void UpdateParameters(Component objectComponent, string parametrName, int thisValue)//поиск в компоненте нужной переменной и обновление ее значение
     {
-        Type program = thisComponent.GetType();
+        //выбираем все доступные переменные переданного компонента
+        Type program = objectComponent.GetType();
         BindingFlags flags = BindingFlags.Public | BindingFlags.Instance;
         FieldInfo[] fields = program.GetFields(flags);
 
+        string objectParameterName = "";
         for (int i = 0; i < fields.Length; i++)//перебор всех переменных
         { 
-            var thisValue = fields[i].GetValue(thisComponent);
+            //var thisValue = fields[i].GetValue(thisComponent);
             var objectValue = fields[i].GetValue(objectComponent);
             if (objectValue != null)
             {
-                if (thisValue.GetType() == typeof(int))//если тип целочисленный
+                objectParameterName = fields[i].Name;
+                if (objectParameterName == parametrName)//если название переменной совпадает, то обнавляем значение
                 {
-                    fields[i].SetValue(objectComponent, (int)objectValue + (int)thisValue);
-                }
-                if (thisValue.GetType() == typeof(float))//если тип число с плавающей запятой
-                {
-                    fields[i].SetValue(objectComponent, (float)objectValue + (float)thisValue);
+                    if (objectValue.GetType() == typeof(int))//если тип целочисленный
+                    {
+                        fields[i].SetValue(objectComponent, (int)objectValue + (int)thisValue);
+                    }
+                    if (objectValue.GetType() == typeof(float))//если тип число с плавающей запятой
+                    {
+                        fields[i].SetValue(objectComponent, (float)objectValue + (float)thisValue);
+                    }
                 }
             }
             //Debug.Log(fields[i].GetValue(objectComponent));
         }
     }
 
-    private void DeleteOnExceptionsList()
-    {
-        thisComponents = new List<Component>(GetComponents<Component>());//получить все компоненты
+    //private void DeleteOnExceptionsList()
+    //{
+    //    thisComponents = new List<Component>(GetComponents<Component>());//получить все компоненты
 
-        foreach (var exceptionsComponent in exceptionsComponents) //для каждого исключающего компонента
-        {
-            //удаляем этот компонент из массива из массива
-            thisComponents.Remove(exceptionsComponent);
-        }
-    }
+    //    foreach (var exceptionsComponent in exceptionsComponents) //для каждого исключающего компонента
+    //    {
+    //        //удаляем этот компонент из массива из массива
+    //        thisComponents.Remove(exceptionsComponent);
+    //    }
+    //}
 }

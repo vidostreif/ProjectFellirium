@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Collections.Generic;
 
 [CustomEditor(typeof(ImprovingCard))] //Сообщаем редактору, что это класс для кастомизации вкладки инспектора, компонента "ImprovingCard"
+//[CanEditMultipleObjects]
 class ImprovingCardEditor : Editor
 { //Наследуем наш класс кастомизации, от редактора Юнити
 
@@ -14,6 +15,8 @@ class ImprovingCardEditor : Editor
     { //Сообщаем редактору, что этот инспектор заменит прежний (встроеный)
 
         ImprovingCard myImprovingCard = (ImprovingCard)target;
+
+        EditorGUILayout.LabelField("Массив параметров для изменения:");
 
         int LastSizeOfArray = myImprovingCard.sizeOfArray; //сохраняем последний размер массива
         myImprovingCard.sizeOfArray = EditorGUILayout.IntField("Размер массива", myImprovingCard.sizeOfArray);
@@ -75,44 +78,8 @@ class ImprovingCardEditor : Editor
 
                     myImprovingCard.arrayForImproving[i].value = EditorGUILayout.IntField("Значение улучшения", myImprovingCard.arrayForImproving[i].value);
                 }
-
-                //if (overallGameObject[i] != null)
-                //{
-                //    myImprovingCard.arrayForImproving[i].componentsNames = FindComponents(overallGameObject[i]);
-                //    int LastSelectedindexComponent = myImprovingCard.arrayForImproving[i].indexComponent; //сохраняем индекс выбранного ранее компонента
-
-                //    myImprovingCard.arrayForImproving[i].indexComponent = EditorGUILayout.Popup("Название компонента", myImprovingCard.arrayForImproving[i].indexComponent, myImprovingCard.arrayForImproving[i].componentsNames);//выбираем параметр
-
-
-                //    if (LastSelectedindexComponent != myImprovingCard.arrayForImproving[i].indexComponent)//если изменили компонент, то пересохраняем его название
-                //    {
-                //        myImprovingCard.arrayForImproving[i].componentName = myImprovingCard.arrayForImproving[i].componentsNames[myImprovingCard.arrayForImproving[i].indexComponent];
-                //    }
-
-                //    if (myImprovingCard.arrayForImproving[i].componentName != null)//если заполнено значение скрипта который будем улучшать
-                //    {
-                //        Component[] objectComponents = overallGameObject[i].GetComponents<Component>();//находим все компоненты объекта
-                //        Component curComponent = objectComponents[myImprovingCard.arrayForImproving[i].indexComponent];//указываем выбранный компонент
-
-                //        myImprovingCard.arrayForImproving[i].variablesNames = FindParameters(curComponent);
-                //        int LastSelectedindex = myImprovingCard.arrayForImproving[i].indexParameters; //сохраняем индекс выбранного ранее параметра
-
-                //        myImprovingCard.arrayForImproving[i].indexParameters = EditorGUILayout.Popup("Название параметра", myImprovingCard.arrayForImproving[i].indexParameters, myImprovingCard.arrayForImproving[i].variablesNames);//выбираем параметр
-
-                //        if (LastSelectedindex != myImprovingCard.arrayForImproving[i].indexParameters)//если изменили параметр, то пересохраняем его название
-                //        {
-                //            myImprovingCard.arrayForImproving[i].variableName = myImprovingCard.arrayForImproving[i].variablesNames[myImprovingCard.arrayForImproving[i].indexParameters];
-                //        }
-
-                //        myImprovingCard.arrayForImproving[i].value = EditorGUILayout.IntField("Значение улучшения", myImprovingCard.arrayForImproving[i].value);
-                //    }
-
-                //    //overallGameObject[i] = null; //обнуляем                 
-                //}
-
             }
         }
-
     }
 
     private string[] FindComponentsName(GameObject thisGameObject)//находим все компоненты и возвращаем массив с их названиями

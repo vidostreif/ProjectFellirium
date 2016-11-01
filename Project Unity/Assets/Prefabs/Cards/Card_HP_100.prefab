@@ -25,7 +25,6 @@ GameObject:
   - 114: {fileID: 114000012655631584}
   - 114: {fileID: 114000010771377140}
   - 114: {fileID: 114000010631917322}
-  - 114: {fileID: 114000011387446936}
   m_Layer: 0
   m_Name: Card_HP_100
   m_TagString: Card
@@ -72,13 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   authorizedObjects: []
-  exceptionsComponents:
-  - {fileID: 4000013422671406}
-  - {fileID: 212000011613176476}
-  - {fileID: 61000012030682312}
-  - {fileID: 114000011986003436}
-  - {fileID: 114000012655631584}
-  - {fileID: 114000010631917322}
+  sizeOfArray: 2
 --- !u!114 &114000010771377140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,22 +85,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   startLocalPosition: {x: 0, y: 0, z: 0}
---- !u!114 &114000011387446936
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010925225002}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199decefc827ae445baabbf35894443a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 100
-  mp: 0
-  movementSpeed: 0
-  physicalResistance: 0
-  magicResistance: 0
 --- !u!114 &114000011986003436
 MonoBehaviour:
   m_ObjectHideFlags: 1

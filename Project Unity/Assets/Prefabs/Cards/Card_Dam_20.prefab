@@ -25,8 +25,6 @@ GameObject:
   - 114: {fileID: 114000011624745852}
   - 114: {fileID: 114000010771377140}
   - 114: {fileID: 114000010631917322}
-  - 114: {fileID: 114000013753020814}
-  - 114: {fileID: 114000010800886094}
   m_Layer: 0
   m_Name: Card_Dam_20
   m_TagString: Card
@@ -73,15 +71,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   authorizedObjects: []
-  exceptionsComponents:
-  - {fileID: 4000013422671406}
-  - {fileID: 212000011613176476}
-  - {fileID: 61000012030682312}
-  - {fileID: 114000011986003436}
-  - {fileID: 114000010771377140}
-  - {fileID: 114000010631917322}
-  - {fileID: 114000011624745852}
-  sizeOfArray: 1
+  sizeOfArray: 2
 --- !u!114 &114000010771377140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,21 +85,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   startLocalPosition: {x: -15, y: 0, z: 0}
---- !u!114 &114000010800886094
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010925225002}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d03ebe8b0101243a6eb950130e5511, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackPause: 0
-  damage: 20
-  attackDistance: 0
-  target: {fileID: 0}
 --- !u!114 &114000011624745852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -186,22 +161,6 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
---- !u!114 &114000013753020814
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010925225002}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4de2466ecbeb4747b27f1882ee77d5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
-  attackPause: 0
-  damage: 20
-  attackDistance: 0
-  target: {fileID: 0}
 --- !u!212 &212000011613176476
 SpriteRenderer:
   m_ObjectHideFlags: 1
