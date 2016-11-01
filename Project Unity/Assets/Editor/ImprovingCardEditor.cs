@@ -14,9 +14,18 @@ class ImprovingCardEditor : Editor
     public override void OnInspectorGUI()
     { //Сообщаем редактору, что этот инспектор заменит прежний (встроеный)
 
+        base.OnInspectorGUI();//отрисовка стандартного интерфейса
+
+        EditorGUILayout.Separator();//отступ
+
         ImprovingCard myImprovingCard = (ImprovingCard)target;
 
-        EditorGUILayout.LabelField("Массив параметров для изменения:");
+        //Создание своего стиля текста
+        GUIStyle myStyle = new GUIStyle();
+        myStyle.richText = true;
+        myStyle.fontStyle = FontStyle.Bold;
+
+        EditorGUILayout.LabelField("Массив параметров для изменения:", myStyle);
 
         int LastSizeOfArray = myImprovingCard.sizeOfArray; //сохраняем последний размер массива
         myImprovingCard.sizeOfArray = EditorGUILayout.IntField("Размер массива", myImprovingCard.sizeOfArray);
@@ -36,7 +45,7 @@ class ImprovingCardEditor : Editor
         {
             for (int i = 0; i < myImprovingCard.arrayForImproving.Length; i++)
             {
-                //ImprovingCard.StructForImproving currentStructure = myImprovingCard.arrayForImproving[i];
+                EditorGUI.indentLevel = 1;//сдвиг названий
 
                 overallGameObject[i] = (GameObject)EditorGUILayout.ObjectField("Объект", overallGameObject[i], typeof(GameObject));
 
@@ -46,12 +55,28 @@ class ImprovingCardEditor : Editor
                     
                     string[] allComponentsName = FindComponentsName(overallGameObject[i]);//все названия компонентов
 
-                    myImprovingCard.arrayForImproving[i].components = new ImprovingCard.StructForImproving.StructComponents[allComponentsName.Length];
-                    for (int j = 0; j < myImprovingCard.arrayForImproving[i].components.Length; j++)//перебор всех компонентов
+                    //myImprovingCard.arrayForImproving[i].components = new ImprovingCard.StructForImproving.StructComponents[allComponentsName.Length];
+                    //for (int j = 0; j < myImprovingCard.arrayForImproving[i].components.Length; j++)//перебор всех компонентов
+                    //{
+                    //    myImprovingCard.arrayForImproving[i].components[j].componentName = allComponentsName[j];//название компонента
+                    //    myImprovingCard.arrayForImproving[i].components[j].variablesNames = FindParametersName(objectComponents[j]);//названия переменных компонента
+                    //}
+
+                    List<ImprovingCard.StructForImproving.StructComponents> temporaryArray = new List<ImprovingCard.StructForImproving.StructComponents>();//временный список для выделения только значимых компонентов
+                    for (int j = 0; j < allComponentsName.Length; j++)//перебор всех компонентов
                     {
-                        myImprovingCard.arrayForImproving[i].components[j].componentName = allComponentsName[j];//название компонента
-                        myImprovingCard.arrayForImproving[i].components[j].variablesNames = FindParametersName(objectComponents[j]);//названия переменных компонента
+                        string[] variablesNames = FindParametersName(objectComponents[j]);//названия переменных компонента
+
+                        if (variablesNames.Length > 0)//если есть хоть одна доступная переменная, то добавляем в массив
+                        {
+                            ImprovingCard.StructForImproving.StructComponents thisStruct = new ImprovingCard.StructForImproving.StructComponents(allComponentsName[j], variablesNames);//создаем структуру с нужными параметрами
+                            //thisStruct.componentName = allComponentsName[j];//название компонента
+                            //thisStruct.variablesNames = variablesNames;
+                            temporaryArray.Add(thisStruct);
+                        }
                     }
+
+                    myImprovingCard.arrayForImproving[i].components = temporaryArray.ToArray();//сохраняем полученные данные в наш массив
 
                     myImprovingCard.arrayForImproving[i].indexComponent = 0;//обнуляем индекс выбранного компонента
                     overallGameObject[i] = null;//удаляем объект
@@ -59,6 +84,8 @@ class ImprovingCardEditor : Editor
 
                 if (myImprovingCard.arrayForImproving[i].components != null)//если инициализирована структура
                 {
+                    EditorGUI.indentLevel = 2;//сдвиг названий
+
                     string[] nameComponents = new string[myImprovingCard.arrayForImproving[i].components.Length]; //обновляем массив названий компонентов             
                     for (int j = 0; j < nameComponents.Length; j++)//перебор всех компонентов
                     {
@@ -67,16 +94,16 @@ class ImprovingCardEditor : Editor
 
                     int LastSelectedindexComponent = myImprovingCard.arrayForImproving[i].indexComponent; //сохраняем индекс выбранного ранее компонента
 
-                    myImprovingCard.arrayForImproving[i].indexComponent = EditorGUILayout.Popup("Название компонента", myImprovingCard.arrayForImproving[i].indexComponent, nameComponents);//выбираем компонент
+                    myImprovingCard.arrayForImproving[i].indexComponent = EditorGUILayout.Popup("Компонент", myImprovingCard.arrayForImproving[i].indexComponent, nameComponents);//выбираем компонент
 
                     if (LastSelectedindexComponent != myImprovingCard.arrayForImproving[i].indexComponent)//если выбрали другой компонет, то збрасываем индекс выбранного параметра
                     {
                         myImprovingCard.arrayForImproving[i].indexParameter = 0;
                     }
 
-                    myImprovingCard.arrayForImproving[i].indexParameter = EditorGUILayout.Popup("Название параметра", myImprovingCard.arrayForImproving[i].indexParameter, myImprovingCard.arrayForImproving[i].components[myImprovingCard.arrayForImproving[i].indexComponent].variablesNames);//выбираем параметр
+                    myImprovingCard.arrayForImproving[i].indexParameter = EditorGUILayout.Popup("Параметр", myImprovingCard.arrayForImproving[i].indexParameter, myImprovingCard.arrayForImproving[i].components[myImprovingCard.arrayForImproving[i].indexComponent].variablesNames);//выбираем параметр
 
-                    myImprovingCard.arrayForImproving[i].value = EditorGUILayout.IntField("Значение улучшения", myImprovingCard.arrayForImproving[i].value);
+                    myImprovingCard.arrayForImproving[i].value = EditorGUILayout.IntField("Значение", myImprovingCard.arrayForImproving[i].value);
                 }
             }
         }

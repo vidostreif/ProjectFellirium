@@ -8,9 +8,8 @@ using System.Collections.Generic;
 public class ImprovingCard : MonoBehaviour {
     [Header("Объекты к которым применяется карта:")]
     public GameObject[] authorizedObjects;//массив объектов к которым будут применяться улучения
-    //[Header("Компоненты - исключения:")]
-    //public Component[] exceptionsComponents; //компоненты исключения
 
+    [HideInInspector]
     [System.Serializable]
     public struct StructForImproving// структура данных для улучшения
     {
@@ -19,6 +18,12 @@ public class ImprovingCard : MonoBehaviour {
         {
             public string componentName;//название компонента
             public string[] variablesNames;//Все переменные
+
+            public StructComponents(string componentName, string[] variablesNames)//конструктор
+            {
+                this.componentName = componentName;
+                this.variablesNames = variablesNames;
+            }
         }
 
         public StructComponents[] components;//описание всех компонентов
@@ -28,10 +33,10 @@ public class ImprovingCard : MonoBehaviour {
         public int value; //значение улучшения
  
     }
+    [HideInInspector]
     public StructForImproving[] arrayForImproving;//список структур данных для улучшения
+    [HideInInspector]
     public int sizeOfArray;
-
-    //private List<Component> thisComponents;//все компоненты карты
 
     //процедура активации карты
     public void Activate()

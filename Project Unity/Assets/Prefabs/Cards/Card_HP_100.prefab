@@ -70,8 +70,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62fee027ebd33de49859c3ece87dfa42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  authorizedObjects: []
-  sizeOfArray: 2
+  authorizedObjects:
+  - {fileID: 1000012914275440, guid: d95cbd45e507c0f4186c6b63b1ebf94f, type: 2}
+  arrayForImproving:
+  - components:
+    - componentName: UnityEngine.Transform
+      variablesNames: []
+    - componentName: UnityEngine.SpriteRenderer
+      variablesNames: []
+    - componentName: UnityEngine.Rigidbody2D
+      variablesNames: []
+    - componentName: UnityEngine.CircleCollider2D
+      variablesNames: []
+    - componentName: UnityEngine.BoxCollider2D
+      variablesNames: []
+    - componentName: UnityEngine.Animator
+      variablesNames: []
+    - componentName: Team
+      variablesNames:
+      - 
+    - componentName: MobAI
+      variablesNames: []
+    - componentName: LongRangeWeapon
+      variablesNames:
+      - 
+      - attackPause
+      - damage
+      - attackDistance
+      - 
+    - componentName: PhysicalPerformance
+      variablesNames:
+      - hp
+      - mp
+      - movementSpeed
+      - physicalResistance
+      - magicResistance
+    - componentName: MobAnimator
+      variablesNames:
+      - 
+      - velocity
+    indexComponent: 9
+    indexParameter: 0
+    value: 100
+  sizeOfArray: 1
 --- !u!114 &114000010771377140
 MonoBehaviour:
   m_ObjectHideFlags: 1
