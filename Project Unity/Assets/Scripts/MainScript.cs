@@ -70,7 +70,7 @@ public class MainScript : MonoBehaviour {
 // Update is called once per frame
     void Update () {
 
-        processingArrayForMove();//процедура обработки объектов для медленного перемещения и скалирования
+        processingArrayForMove();//процедура обработки объектов для медленного перемещения и скалирования        
     }
 
     internal static void magicChoice(int magic)
@@ -200,7 +200,7 @@ public class MainScript : MonoBehaviour {
         arrayForMove.Add(newStructGivenForMove);
     }
 
-    private void CheckForArrayForMoveAndRemove(Transform transform)
+    public void CheckForArrayForMoveAndRemove(Transform transform)//удаления из массива для медленного перемещения
     {
         //проверяем на наличие переданного трансформа объекта в массиве
         foreach (StructGivenForMove structGivenForMove in arrayForMove)
@@ -245,4 +245,5 @@ public class MainScript : MonoBehaviour {
         }
             
     }
+
 }

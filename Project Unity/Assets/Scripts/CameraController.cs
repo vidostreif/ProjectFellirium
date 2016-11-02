@@ -3,11 +3,11 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour {
 
-    public float sensitivity;   
+    //public float sensitivity;   
 
     //private float Boundary = 5; //размер рамки при нахождении в которой будет передвигаться камера
     private Camera myCam;
-    private Vector3 startMousePosition = new Vector3(0,0,0);
+    //private Vector3 startMousePosition = new Vector3(0,0,0);
 
     //[SerializeField] private Vector2 minXAndY; //хранит минимальные значения в пределах которых может передвигаться камера
     //[SerializeField] private Vector2 maxXAndY; //хранит максимальные значения в пределах которых может передвигаться камера
@@ -39,57 +39,6 @@ public class CameraController : MonoBehaviour {
     void Update()
     {
         //SetUniform();
-
-        //Если нажали правую кнопку мыши
-        if (Input.GetMouseButtonDown(1))
-        {
-            //если стартовая позиция мыши нулевая
-            if (startMousePosition == new Vector3(0, 0, 0))
-            {
-                //записываем положение мышки
-                startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }            
-        }
-
-        //Если удерживаем кнопку мыши
-        if (Input.GetMouseButton(1))
-        {
-            //расчитываем вектор смещения
-            Vector3 translation = startMousePosition - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //передаем его камере новую позицию
-            myCam.transform.Translate(translation);
-            //переопределяем стартовую позицию мышки
-            startMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }
-        else
-        {
-            //иначе проверяем другие способы перемещения
-            // Если подвели указатель мыши к левому краю
-            if (/*Input.mousePosition.x <= Boundary || */ Input.GetKey(KeyCode.LeftArrow))
-                // Двигаем камеру
-                this.transform.Translate(-sensitivity * Time.deltaTime, 0, 0);
-
-            // Если подвели указатель мыши к правому краю
-            if (/*Input.mousePosition.x >= Screen.width - Boundary ||*/ Input.GetKey(KeyCode.RightArrow))
-                // Двигаем камеру
-                this.transform.Translate(sensitivity * Time.deltaTime, 0, 0);
-
-            // Если подвели указатель мыши к верхнему краю
-            if (/*Input.mousePosition.y >= Screen.height - Boundary ||*/ Input.GetKey(KeyCode.UpArrow))
-                // Двигаем камеру
-                this.transform.Translate(0, sensitivity * Time.deltaTime, 0);
-
-            // Если подвели указатель мыши к нижниму краю
-            if (/*Input.mousePosition.y <= Boundary ||*/ Input.GetKey(KeyCode.DownArrow))
-                // Двигаем камеру
-                this.transform.Translate(0, -sensitivity * Time.deltaTime, 0);
-        }
-
-        //Если отпустили левую кнопку
-        if (Input.GetMouseButtonUp(1))
-        {
-            startMousePosition = new Vector3(0, 0, 0);
-        }
 
         ////зум
         //myCam.orthographicSize -= Input.GetAxis("Mouse ScrollWheel");

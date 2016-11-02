@@ -308,7 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca17d292a0da71499881eccf7dc48dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 15
   boundsMap: {fileID: 1923111167}
   useBounds: 1
 --- !u!81 &117552945
@@ -2369,6 +2368,7 @@ GameObject:
   - 4: {fileID: 1541199682}
   - 114: {fileID: 1541199681}
   - 114: {fileID: 1541199683}
+  - 114: {fileID: 1541199684}
   m_Layer: 0
   m_Name: GameHelper
   m_TagString: Untagged
@@ -2417,6 +2417,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8bd364d2d05e74d940fd1d462cb49f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1541199684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1541199680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56b333838fcfe4d4a9f10e839ad4994b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 0
 --- !u!1001 &1559736275
 Prefab:
   m_ObjectHideFlags: 0
