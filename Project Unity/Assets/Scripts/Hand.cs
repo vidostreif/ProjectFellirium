@@ -5,8 +5,9 @@ using System.Collections.Generic;
 public class Hand : MonoBehaviour {
 
     public List<Card> Cards;//все карты в руке
-    public float length;
+    public float length;//ширина руки
     public float cardWidth;//ширина карты
+
     //public CommanderAI commander { get; private set; }
     public Team team { get; private set; }//наша команда
     
@@ -57,4 +58,5 @@ public class Hand : MonoBehaviour {
             MainScript.Instance.SlowlyMoveToNewLocalPosition(Cards[i].transform, newPosition, 1, 4);
         }
     }
+
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
+//using System;
 using System.Collections.Generic;
 
 public class CommanderAI : MonoBehaviour {
@@ -12,7 +12,7 @@ public class CommanderAI : MonoBehaviour {
     public GameObject mob;//префаб моба
     public GameObject mob2;
 
-    public bool managePlayer = false;//признок перехвата управления игроком
+    public bool managePlayer = false;//признак перехвата управления игроком
 
     public CommanderAI enemy;//командир враг
     public CommanderAI friend;//командир друг
@@ -21,9 +21,15 @@ public class CommanderAI : MonoBehaviour {
     public List<Card> ActionsCards; //активные карты
 
     private Hand hand; //рука с картами
+    private Card selectionCard;//выбранная карта
+
     private float timeLastCreateMob;
     private float timeLastCreateMob2;
     private Transform thisTransform;
+
+    public int energy = 0; //количество энергии
+    private int pauseToIncreaseEnergy = 3;//время для увеличения энергии
+    private float lastTimeToIncreaseEnergy = 0;//последний момент увеличения энергии
 
     // Use this for initialization
     void Start()
@@ -59,6 +65,27 @@ public class CommanderAI : MonoBehaviour {
 
 
         thisTransform = GetComponent<Transform>();
+    }
+
+    void Update()
+    {
+        if (!managePlayer)//если не управляется игроком
+        {
+            CardSelectionImitation();
+
+            int random = Random.Range(0, 50);
+
+            if (selectionCard != null && random > 48)
+            {
+                if (selectionCard.cost <= energy)//если достаточно энергии
+                {
+                    PlayCard(selectionCard);//разыгрываем карту
+                    selectionCard = null;
+                }
+            }
+        }
+
+        IncreaseEnergy();//проверка и увеличение количество энергии
     }
 
     // Update is called once per frame
@@ -124,26 +151,35 @@ public class CommanderAI : MonoBehaviour {
         return enemy.tower.transform;
     }
 
+    //работа с энергией
+    private void IncreaseEnergy()
+    {
+        if (Time.time > lastTimeToIncreaseEnergy + pauseToIncreaseEnergy && energy < 10)//если прошло времени больше чем пауза и энергии меньше 10
+        {
+            energy++;//увеличиваем энергию на еденицу
+            lastTimeToIncreaseEnergy = Time.time;
+        }
+    }
+
     //работа с картами
     //разыграть карту
     public void PlayCard(Card card)
     {
+        if (card.cost <= energy)//если достаточно энергии
+        {
+            energy = energy - card.cost; //уменьшаем количество энергии
 
-        //добавляем карту в список активных
-        AddCardInActionsCards(card);
+            AddCardInActionsCards(card);//добавляем карту в список активных
 
-        //активировать карту
-        card.Activate();
+            card.Activate();//активировать карту
 
-        ////убираем карту из руки
-        //DeleteCardFromHand(card);
-
-        //убираем карту из руки
-        hand.RemoveCard(card);
-        //назначаем нового родителя
-        card.transform.parent = thisTransform;
-        //определяем новое место и размер отображения карты
-        MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
+            //убираем карту из руки
+            hand.RemoveCard(card);
+            //назначаем нового родителя
+            card.transform.parent = thisTransform;
+            //определяем новое место и размер отображения карты
+            MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
+        }
     }
 
     //добавляем карту в список активных карт
@@ -152,16 +188,29 @@ public class CommanderAI : MonoBehaviour {
         ActionsCards.Add(card);
     }
 
-    ////убираем карту из руки
-    //public void DeleteCardFromHand(Card card)
-    //{
-    //    //убираем карту из руки
-    //    hand.RemoveCard(card);
-    //    //назначаем нового родителя
-    //    card.transform.parent = thisTransform;
-    //    //определяем новое место и размер отображения карты
-    //    MainScript.Instance.SlowlyMoveToNewPosition(card.transform, thisTransform.position, 0.5f);
-    //}
+    private void CardSelectionImitation()//имитация выбора карты
+    {
+        if (hand.Cards.Count > 0)//если в руке есть карты
+        {
+            int random = Random.Range(0, 50);
 
+            if (selectionCard == null && random > 48)//если не определена выбранная карта с малой вероятностью определяем ее и поднимаем
+            {
+                int cardNumberForSelection = Random.Range(0, hand.Cards.Count);//рандомно определяем номер карты
 
+                selectionCard = hand.Cards[cardNumberForSelection];// определяем выбранную карту
+
+                selectionCard.PointerEnter();//имитируем наведение на карту для ее поднятия
+            }
+            else
+            {
+                if (random > 48)//с малой вероятностью возвращяем карту на место
+                {
+                    selectionCard.PointerExit();//возвращаем карту на место
+                    selectionCard = null;
+                }
+            }
+        }
+
+    }
 }

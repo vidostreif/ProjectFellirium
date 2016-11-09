@@ -5,7 +5,9 @@ using System;
 public class Card : MonoBehaviour {
     //public CommanderAI commander { get; private set; }
 
+    public int cost = 1;//стоимость карты
     public EnumCard type;
+
     public Team team { get; private set; }//наша команда
     public Vector3 startLocalPosition;//стартовая позиция карты относительно предка
 
@@ -25,8 +27,7 @@ public class Card : MonoBehaviour {
         if ((unresolvedCard && team.commander && !drag) // если эта карта не разыгранна и есть командир и не перетаскивается
             || drag && transform.localPosition.y > startLocalPosition.y + 5)// или если перетаскивается, то если выше на 3 поинта чем стартовая позиция
         {
-            team.commander.PlayCard(this);
-            unresolvedCard = false; //помечаем карту как разыгранная
+            team.commander.PlayCard(this);            
         }        
     }
 
@@ -67,43 +68,49 @@ public class Card : MonoBehaviour {
         }
         drag = false;
     }
-
+    
     public void Activate()
     {
-        //определяем тип карты при создании
-        if (GetComponent<ImprovingCard>())
+        if (unresolvedCard)
         {
-            type = EnumCard.ImprovingCard; //карта улучшения
-            //dopComponent = GetComponent<ImprovingCard>();
+            unresolvedCard = false; //помечаем карту как разыгранная
+
+            //определяем тип карты при создании
+            if (GetComponent<ImprovingCard>())
+            {
+                type = EnumCard.ImprovingCard; //карта улучшения
+                                               //dopComponent = GetComponent<ImprovingCard>();
+            }
+
+            if (GetComponent<AddWarCard>())
+            {
+                type = EnumCard.AddWarCard; //карта добавления мобов
+                                            //dopComponent = GetComponent<AddWarCard>();
+            }
+
+            if (GetComponent<MagicCard>())
+            {
+                type = EnumCard.MagicCard; //карта магии
+                                           //dopComponent = GetComponent<AddWarCard>();
+            }
+
+            if (type == EnumCard.ImprovingCard)
+            {
+                ImprovingCard dopComponent = GetComponent<ImprovingCard>();
+                dopComponent.Activate();
+            }
+            else if (type == EnumCard.AddWarCard)
+            {
+                AddWarCard dopComponent = GetComponent<AddWarCard>();
+                dopComponent.Activate();
+            }
+            else if (type == EnumCard.MagicCard)
+            {
+                MagicCard dopComponent = GetComponent<MagicCard>();
+                dopComponent.Activate();
+            }
         }
 
-        if (GetComponent<AddWarCard>())
-        {
-            type = EnumCard.AddWarCard; //карта добавления мобов
-            //dopComponent = GetComponent<AddWarCard>();
-        }
-
-        if (GetComponent<MagicCard>())
-        {
-            type = EnumCard.MagicCard; //карта магии
-            //dopComponent = GetComponent<AddWarCard>();
-        }
-
-        if (type == EnumCard.ImprovingCard)
-        {
-            ImprovingCard dopComponent = GetComponent<ImprovingCard>();
-            dopComponent.Activate();
-        }
-        else if (type == EnumCard.AddWarCard)
-        {
-            AddWarCard dopComponent = GetComponent<AddWarCard>();
-            dopComponent.Activate();
-        }
-        else if (type == EnumCard.MagicCard)
-        {
-            MagicCard dopComponent = GetComponent<MagicCard>();
-            dopComponent.Activate();
-        }
     }
     
 }

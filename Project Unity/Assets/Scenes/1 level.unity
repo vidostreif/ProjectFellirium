@@ -1067,6 +1067,11 @@ Prefab:
       propertyPath: commander
       value: 
       objectReference: {fileID: 1218601566}
+    - target: {fileID: 114000014210417198, guid: 707f5399a54e2b04383eadce0d485f8f,
+        type: 2}
+      propertyPath: hp
+      value: 1500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 707f5399a54e2b04383eadce0d485f8f, type: 2}
   m_IsPrefabParent: 0
@@ -1675,7 +1680,7 @@ Prefab:
     - target: {fileID: 114000012645545392, guid: 0f84c3504e1723248acce514622d99cf,
         type: 2}
       propertyPath: managePlayer
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114000012645545392, guid: 0f84c3504e1723248acce514622d99cf,
         type: 2}
